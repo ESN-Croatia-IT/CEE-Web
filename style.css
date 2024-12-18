@@ -4,7 +4,8 @@ h1 {
 
 td {
 	border: 1px solid black;
-	width: 100px;
+	width: 125px;
+	height: 75px;
 	text-align: center;
 }
 
