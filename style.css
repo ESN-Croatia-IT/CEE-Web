@@ -1,0 +1,33 @@
+h1 {
+	color:purple;
+}
+
+td {
+	border: 1px solid black;
+	width: 100px;
+	text-align: center;
+}
+
+.boja-najdraza-primjer {
+	color: cadetblue;
+}
+
+.boja-neznam {
+	color: red;
+}
+
+.boja-nimalo {
+	color: palevioletred;
+}
+
+.boja-osnovno {
+	color: darkgoldenrod;
+}
+
+.boja-osrednje {
+	color: green;
+}
+
+.boja-puno {
+	color: blue;
+}
