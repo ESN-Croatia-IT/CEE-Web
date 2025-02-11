@@ -11,8 +11,30 @@
 <body>
     <div id="header"></div>
     <div id="container-1">
-        <h1>Slogan/Naslov</h1>
-        <p id="container-1-p1">Sat/Odbrojavanje <br> 12:00:00</p>
+        <h1><bold>Summer CEE</bold></h1>
+
+        <div id="container-countdown-1">
+            <h1>Countdown to Summer CEE</h1>
+            <div class="countdown-container" id="countdown">
+                <div class="time-box">
+                    <span id="days">0</span>
+                    <small>Days</small>
+                </div>
+                <div class="time-box">
+                    <span id="hours">0</span>
+                    <small>Hours</small>
+                </div>
+                <div class="time-box">
+                    <span id="minutes">0</span>
+                    <small>Minutes</small>
+                </div>
+                <div class="time-box">
+                    <span id="seconds">0</span>
+                    <small>Seconds</small>
+                </div>
+            </div>
+        </div>
+
         <div id="container-1-c1">
             <button id="container-1-bttn1">TICKETS</button>
         </div>
@@ -72,5 +94,8 @@
     </div>
     <div id="footer"></div>
     <script src="/src/scripts/component-joiner.js"></script>
+
+    <!--Countdown JS-->
+    <script src="scripts/countdown.js"></script>
 </body>
 </html>
