@@ -6,85 +6,90 @@
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
     <link href="/src/output.css" rel="stylesheet">
-    <link href="/src/style.css" rel="stylesheet">
 </head>
 <body>
     <div id="header"></div>
     <script src="/src/scripts/component-joiner.js"></script>
-    <div class="m-4">
+
+
+
+
+    <div class="m-4 flex flex-col items-center justify-around h-72">
         
-        <h1 class="pt-4 text-center text-5xl">Summer CEE</h1>
-        
-        <div class="pt-8">
-            <h1 class="text-center text-3xl">Countdown to Summer CEE</h1>
-            <div class="countdown-container" id="countdown">
-                <div class="time-box">
-                    <span id="days">0</span>
-                    <small>Days</small>
-                </div>
-                <div class="time-box">
-                    <span id="hours">0</span>
-                    <small>Hours</small>
-                </div>
-                <div class="time-box">
-                    <span id="minutes">0</span>
-                    <small>Minutes</small>
-                </div>
-                <div class="time-box">
-                    <span id="seconds">0</span>
-                    <small>Seconds</small>
+        <h1 class="text-center text-5xl">Summer CEE</h1>
+
+        <div class="w-full">
+            <h2 class="border-solid border-4 border-black font-bold text-white bg-ESNpink inline px-4 py-1">Countdown</h2>
+            
+            <div class="border-solid border-4 border-black p-4 mt-0.5">
+                <div class="flex justify-center text-3xl font-bold" id="countdown">
+                    <div class="flex flex-col items-center w-20">
+                        <span class="text-ESNgreen" id="days">0</span>
+                        <small>Days</small>
+                    </div>
+                    <div class="flex flex-col items-center w-20">
+                        <span class="text-ESNpink" id="hours">0</span>
+                        <small>Hrs</small>
+                    </div>
+                    <div class="flex flex-col items-center w-20">
+                        <span class="text-ESNorange" id="minutes">0</span>
+                        <small>Mins</small>
+                    </div>
+                    <div class="flex flex-col items-center w-20">
+                        <span class="text-ESNblue" id="seconds">0</span>
+                        <small>Secs</small>
+                    </div>
                 </div>
             </div>
         </div>
         
-        <div class="pt-8 flex justify-around">
+        <div class="w-72 flex justify-around font-mono">
             <a href="/" class="text-xl">TICKETS</a>
             <a href="/" class="text-xl">UPDATES</a>
         </div>
     </div>
     
     
-    <div id="container-2">
-        <div id="container-2-c1">
-            <h2>About CEE</h2>
-        </div>
+    <div class="m-4 pt-8">
+        <h2 class="border-solid border-4 border-black font-bold text-white bg-ESNpink inline px-4 py-1">About CEE</h2>
         
-        <div id="container-2-c2">
-            <p id="container-2-p1">
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
-                Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
+        <div class="border-solid border-4 border-black mt-0.5">
+            <img class="" src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
+            <p class="m-4">
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
                 Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.
             </p>
-            <img id="container-2-img1" src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
         </div>
     </div>
     
     
-    <div id="container-3">
-        <h2>Quotes</h2>
-        <div id="container-3-c1">
-            <img src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+    <div class="m-4 pt-8">
+        <h2 class="border-solid border-4 border-black font-bold text-white bg-ESNpink inline px-4 py-1">Quotes</h2>
+
+        <div class="flex flex-col justify-around border-solid border-4 border-black mt-0.5">
+
+            <div class="m-2">
+                <img class="w-20 rounded-full float-left mr-2" src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
+                <p class="inline">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
+            <div class="m-2">
+                <img class="w-20 rounded-full float-left mr-2" src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
+                <p class="inline">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
+            <div class="m-2">
+                <img class="w-20 rounded-full float-left mr-2" src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
+                <p class="inline">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
+            <div class="m-2">
+                <img class="w-20 rounded-full float-left mr-2" src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
+                <p class="inline">Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
+            </div>
         </div>
-        
-        <div id="container-3-c2">
-            <img src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-        </div>
-        
-        <div id="container-3-c3">
-            <img src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-        </div>
-        
-        <div id="container-3-c4">
-            <img src="https://www.scoliosis-rehabilitation.com/mymedia/2016/06/no-face.png">
-            <p>Sed ut perspiciatis unde omnis iste natus error sit voluptatem accusantium doloremque laudantium.</p>
-        </div>  
+
     </div>
+
     <div id="footer"></div>
     <script src="/src/scripts/component-joiner.js"></script>
     
