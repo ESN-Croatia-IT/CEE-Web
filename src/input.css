@@ -2,3 +2,12 @@
 @tailwind components;
 @tailwind utilities;
 
+@layer {
+    .shadow-darkblue {
+        text-shadow: 2px 2px 0px #2E3192;
+    }
+
+    .shadow-gray {
+        box-shadow: 2px 2px 0px #555555;
+    }
+}
