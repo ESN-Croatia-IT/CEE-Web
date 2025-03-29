@@ -1,0 +1,95 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css">
+    
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Domine:wght@400..700&family=Lato:ital,wght@0,100;0,300;0,400;0,700;0,900;1,100;1,300;1,400;1,700;1,900&display=swap" rel="stylesheet">
+    
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Drop-down List</title>
+
+    <style>
+
+    @media (max-width: 768px) {
+        .menu {
+            cursor: pointer;
+            position: relative;
+            z-index: 100; 
+        }
+
+        .menu i {
+            color: #2E3192;
+            transition: color 0.8s ease-in-out;
+            font-size: 32px;
+        }
+
+        .dropdown {
+            position: fixed;
+            display: flex;
+            flex-direction: column;
+            top: -100vh;
+            left: 0;
+            width: 100%;
+            background: #2E3192;
+            color: white;
+            text-align: center;
+            padding: 20px;
+            padding-top: 40px;
+            transition: top 0.8s ease-in-out;
+            z-index: 50;
+            font-family: "Lato", sans-serif;
+            box-sizing: border-box; 
+            font-size: 30px;
+            font-weight: bold;
+        }
+
+
+        .dropdown p a {
+            outline: none;
+            color: white;
+            text-decoration: none;
+        }
+
+        .dropdown.active {
+            top: 0;
+        }
+
+        .menu.active i {
+            transition: color 0.8s ease-in-out;
+            color: white !important;
+        }
+
+        .menu.active {
+            z-index: 100; 
+        }
+    }
+    </style>
+</head>
+<body>
+    <div class="menu" id="menu" style="float: right; margin-top: 10px; margin-right: 10px;">
+        <i class="fas fa-bars" onclick="toggleDropdown()"></i>
+    </div>
+
+    <div id="dropdown" class="dropdown">
+        <p><a href="#menu" style="text-decoration: underline;">Buy Tickets Now</a></p>
+        <p><a href="#menu">&gt Homepage &lt</a></p>
+        <p><a href="#menu">Packages</a></p>
+        <p><a href="#menu">Contact Us</a></p>
+        <p><a href="#menu">Our Team</a></p>
+        <p><a href="#menu">FAQ</a></p>
+    </div>
+
+    <script>
+        function toggleDropdown() {
+            let dropdown = document.getElementById("dropdown");
+            let menu = document.getElementById("menu");
+
+            dropdown.classList.toggle("active");
+            menu.classList.toggle("active");
+        }
+    </script>
+</body>
+</html>
