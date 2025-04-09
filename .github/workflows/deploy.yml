@@ -49,7 +49,7 @@ jobs:
             --exclude 'package.json' \
             --exclude 'package-lock.json' \
             --exclude 'tailwind.config.js' \
-            --exclude 'src/input.css' \
+            --exclude 'src' \
             --exclude 'README.md' \
             . \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_PATH }}/
