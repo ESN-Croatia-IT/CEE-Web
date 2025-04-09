@@ -14,6 +14,15 @@ jobs:
       - name: Checkout Repository
         uses: actions/checkout@v4
 
+      - name: Create .htaccess file
+        run: |
+          echo "DirectoryIndex homepage.html" > .htaccess
+          echo "Options -MultiViews" >> .htaccess
+          echo "RewriteEngine On" >> .htaccess
+          echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
+          echo "RewriteCond %{REQUEST_FILENAME} !-d" >> .htaccess
+          echo "RewriteRule ^ homepage.html [QSA,L]" >> .htaccess
+          
       - name: Setup Node.js
         uses: actions/setup-node@v4
         with:
