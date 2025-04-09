@@ -42,6 +42,8 @@ jobs:
             echo "REMOTE_PATH=${{ secrets.PRODUCTION_PATH }}" >> $GITHUB_ENV
           elif [[ "${{ github.ref }}" == "refs/heads/dev" ]]; then
             echo "REMOTE_PATH=${{ secrets.DEV_PATH }}" >> $GITHUB_ENV
+          else
+            echo "REMOTE_PATH=dev.esn.hr" >> $GITHUB_ENV
           fi
 
       - name: Install SSH Key
