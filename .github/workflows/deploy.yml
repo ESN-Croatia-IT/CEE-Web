@@ -51,5 +51,5 @@ jobs:
             --exclude 'tailwind.config.js' \
             --exclude 'src/input.css' \
             --exclude 'README.md' \
-            . \ # Source directory: current checkout directory
+            . \
             ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ secrets.REMOTE_PATH }}/
