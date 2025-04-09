@@ -29,7 +29,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "setup": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+    "setup": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./src/output.css --minify"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"
