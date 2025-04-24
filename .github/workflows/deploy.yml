@@ -1,0 +1,73 @@
+name: Build CSS and Deploy to Shared Hosting (Subdomain)
+
+# Run this workflow only on pushes to the main branch
+on:
+  push:
+    branches:
+      - main
+      - dev
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      - name: Checkout Repository
+        uses: actions/checkout@v4
+
+      - name: Create .htaccess file
+        run: |
+          echo "DirectoryIndex homepage.html" > .htaccess
+          echo "Options -MultiViews" >> .htaccess
+          echo "RewriteEngine On" >> .htaccess
+          echo "RewriteCond %{REQUEST_FILENAME} !-f" >> .htaccess
+          echo "RewriteCond %{REQUEST_FILENAME} !-d" >> .htaccess
+          echo "RewriteRule ^ homepage.html [QSA,L]" >> .htaccess
+          
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '22'
+          cache: 'npm'
+
+      - name: Install Dependencies
+        run: npm ci
+
+      - name: Build Tailwind CSS
+        run: npm run build:css
+
+      - name: Set Remote Path
+        run: |
+          if [[ "${{ github.ref }}" == "refs/heads/main" ]]; then
+            echo "REMOTE_PATH=${{ secrets.PRODUCTION_PATH }}" >> $GITHUB_ENV
+          else
+            echo "REMOTE_PATH=${{ secrets.DEV_PATH }}" >> $GITHUB_ENV
+          fi
+
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: 'just-a-placeholder-for-now'
+
+      - name: Add Server to Known Hosts
+        run: |
+          mkdir -p ~/.ssh
+          ssh-keyscan -H ${{ secrets.SSH_HOST }} >> ~/.ssh/known_hosts
+          chmod 644 ~/.ssh/known_hosts
+
+      - name: Deploy using rsync
+        # This syncs from the current directory (.) instead of ./dist/
+        # It excludes files and folders not typically needed on the live server.
+        run: |
+          rsync -avz --delete \
+            --exclude '.git*' \
+            --exclude '.github' \
+            --exclude 'node_modules' \
+            --exclude 'package.json' \
+            --exclude 'package-lock.json' \
+            --exclude 'tailwind.config.js' \
+            --exclude 'src' \
+            --exclude 'README.md' \
+            . \
+            ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }}:${{ env.REMOTE_PATH }}/

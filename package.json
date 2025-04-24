@@ -3,11 +3,34 @@
   "version": "1.0.0",
   "description": "",
   "license": "ISC",
-  "author": "",
+  "author": {
+    "name": "Luka Šulc",
+    "email": "lukasulc0@gmail.com",
+    "url": "https://lukasulc.pages.dev/"
+  },
+  "contributors": [
+    {
+      "name": "Marin Prusac",
+      "url": "https://github.com/marinprusac"
+    },
+    {
+      "name": "Antonio Limov",
+      "url": "https://github.com/4nt01"
+    },
+    {
+      "name": "Elizabeta Pifar",
+      "url": "https://github.com/elizabeta2"
+    },
+    {
+      "name": "Lana Malogorski",
+      "url": "https://github.com/takozul17"
+    }
+  ],
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "setup": "npx tailwindcss -i ./src/input.css -o ./src/output.css --watch"
+    "setup": "npx tailwindcss -i ./src/input.css -o ./output.css --watch",
+    "build:css": "npx tailwindcss -i ./src/input.css -o ./output.css --minify"
   },
   "devDependencies": {
     "tailwindcss": "^3.4.17"
