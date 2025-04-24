@@ -12,7 +12,6 @@ async function loadHTML(id, file) {
   
   // Load the header and footer
   window.addEventListener('DOMContentLoaded', () => {
-	loadHTML('header', '/components/header.html');
+	loadHTML('dropdownlist', '/components/dropdownlist.html');
 	loadHTML('footer', '/components/footer.html');
-	loadHTML('navbar', '/components/navbar.html');
 });
