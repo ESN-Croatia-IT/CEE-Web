@@ -1,3 +1,6 @@
+/**
+ * Toggles the visibility of the dropdown menu and updates the icon color.
+ */
 function toggleDropdown() {
     const dropdown = document.getElementById("dropdown");
     const menu = document.getElementById("menu");
@@ -15,4 +18,3 @@ function toggleDropdown() {
       icon.classList.add("text-[#2E3192]");
     }
   }
-  
