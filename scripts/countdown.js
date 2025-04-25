@@ -1,6 +1,3 @@
-/**
- * Updates the countdown timer elements on the page.
- */
 function updateCountdown() {
     const now = new Date();
     const targetDate = new Date(now.getFullYear(), 3, 1); // April 1st - Napomena: tada nije CEE, datum je stavljen samo kao običan primjer

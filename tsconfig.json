@@ -1,9 +1,0 @@
-{
-  "compilerOptions": {
-    "lib": ["dom", "es2024"],
-    "allowJs": true,
-    "checkJs": true,
-    "strict": true
-  },
-  "include": ["**/*.js"]
-}
