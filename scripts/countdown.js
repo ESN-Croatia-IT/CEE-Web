@@ -1,3 +1,6 @@
+/**
+ * Updates the countdown timer elements on the page.
+ */
 function updateCountdown() {
     const now = new Date();
     const targetDate = new Date(now.getFullYear(), 4, 22, 12); // May 22, 12:00 PM

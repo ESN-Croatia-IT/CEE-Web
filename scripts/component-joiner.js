@@ -1,3 +1,9 @@
+/**
+ * Loads HTML from a file and injects it into the element with the given id.
+ * @param {string} id - The id of the element to inject HTML into.
+ * @param {string} file - The path to the HTML file to load.
+ * @returns {Promise<void>}
+ */
 async function loadHTML(id, file) {
 	try {
 	  const response = await fetch(file);

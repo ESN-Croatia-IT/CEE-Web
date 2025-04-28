@@ -1,3 +1,6 @@
+/**
+ * Handles FAQ expand/collapse animation on DOMContentLoaded.
+ */
 document.addEventListener("DOMContentLoaded", () => {
     const faqs = document.querySelectorAll("details");
   
@@ -43,4 +46,3 @@ document.addEventListener("DOMContentLoaded", () => {
       });
     });
   });
-  
