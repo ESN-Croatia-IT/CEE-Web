@@ -5,18 +5,93 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="/output.css" rel="stylesheet">
-    <title>Contacts</title>
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
-</head>
+    <title>Our Team and Contact Us</title>
+  </head>
 <body class="font-['Montserrat',sans-serif] font-[400]">
-    <div id="dropdownlist"></div>
 
+  <!-- Placeholder for the header -->
+  <div id="header-placeholder"></div>
 
+  <!-- Our Team Title -->
+  <div class="text-center mt-4">
+    <h1 class="text-2xl font-bold text-[#2E3178]">Our Team</h1> <!-- bigger title -->
+  </div>
 
-    <div id="footer"></div>
+  <!-- Members Container -->
+  <div class="bg-[#817CE3] rounded-xl m-4 p-6 space-y-10"> <!-- more padding, more space -->
 
-    <script src="scripts/component-joiner.js"></script>
-    <script src="scripts/dropdownlist.js"></script>
+    <!-- Member 1 -->
+    <div class="flex flex-col items-center">
+      <h2 class="text-base font-semibold text-[#2E3178] mb-3">Team member #1</h2> <!-- bigger name -->
+      <div class="w-48 h-48 bg-white border-4 border-[#2E3178] rounded-full mb-4"></div> <!-- Bigger circle -->
+      <p class="text-xs text-white text-center leading-4"> <!-- text-xs instead of text-[10px] -->
+        Opis Opis Opis Opis Opis Opis Opis Opis<br>
+        Opis Opis Opis Opis Opis Opis Opis Opis<br>
+        Opis Opis Opis Opis Opis Opis Opis Opis
+      </p>
+    </div>
+
+    <!-- Member 2 -->
+    <div class="flex flex-col items-center">
+      <h2 class="text-base font-semibold text-[#2E3178] mb-3">Team member #1</h2> <!-- bigger name -->
+      <div class="w-48 h-48 bg-white border-4 border-[#2E3178] rounded-full mb-4"></div> <!-- Bigger circle -->
+      <p class="text-xs text-white text-center leading-4"> <!-- text-xs instead of text-[10px] -->
+        Opis Opis Opis Opis Opis Opis Opis Opis<br>
+        Opis Opis Opis Opis Opis Opis Opis Opis<br>
+        Opis Opis Opis Opis Opis Opis Opis Opis
+      </p>
+    </div>
+
+  </div>
+
+  <div class="flex justify-center mb-4">
+    <div class="bg-[#817CE3] text-[#2E3178] rounded-xl m-4 p-6 w-full text-center shadow-md relative overflow-hidden">
+  
+      <!-- "Have a question?" Box -->
+      <div class="bg-white text-[#2E3178] font-bold text-xl px-4 py-2 rounded-md mb-6 inline-block">
+        Have a<br />question?
+      </div>
+        
+      <!-- Email section -->
+      <div class="mt-6">
+        <div class="text-base font-semibold mb-2">email:</div>
+        <a href="mailto:info@domain.hr" class="text-lg font-bold underline">
+          info@domain.hr
+        </a>
+      </div>
+      
+      <!-- Phone section -->
+      <div class="mt-6">
+        <div class="text-base font-semibold mb-2">phone:</div>
+        <div class="text-lg font-bold">
+          +385 99 999 9999
+        </div>
+      </div>
     
+    </div>
+  </div>
+
+  <div id="footer"></div>
+
+
+  <!-- Load header -->
+  <script type="module">
+    fetch('components/header.html')
+    .then(res => {
+      if (!res.ok) throw new Error("Component not found");
+      return res.text();
+    })
+    .then(html => {
+      document.getElementById('header-placeholder').innerHTML = html;
+    })
+    .catch(err => {
+      console.error("Failed to load header:", err);
+    });
+  </script>
+
+  <script src="scripts/component-joiner.js"></script>
+  <script src="scripts/dropdownlist.js"></script>
+
 </body>
 </html>
