@@ -5,20 +5,21 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <link href="/output.css" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <title>Our Team and Contact Us</title>
-</head>
-<body class="bg-gray-100">
+  </head>
+<body class="font-['Montserrat',sans-serif] font-[400]">
 
   <!-- Placeholder for the header -->
   <div id="header-placeholder"></div>
 
-<!-- Our Team Title -->
-<div class="text-center mt-4">
-  <h1 class="text-2xl font-bold text-[#2E3178]">Our Team</h1> <!-- bigger title -->
-</div>
+  <!-- Our Team Title -->
+  <div class="text-center mt-4">
+    <h1 class="text-2xl font-bold text-[#2E3178]">Our Team</h1> <!-- bigger title -->
+  </div>
 
-<!-- Members Container -->
-<div class="bg-[#817CE3] rounded-xl mx-4 my-4 p-6 space-y-10"> <!-- more padding, more space -->
+  <!-- Members Container -->
+  <div class="bg-[#817CE3] rounded-xl mx-4 my-4 p-6 space-y-10"> <!-- more padding, more space -->
 
   <!-- Member 1 -->
   <div class="flex flex-col items-center">
@@ -42,8 +43,6 @@
     </p>
   </div>
 
-</div>
-
   </div>
 
   <div class="flex justify-center">
@@ -53,10 +52,10 @@
       <div class="bg-white text-[#2E3178] font-bold text-xl px-4 py-2 rounded-md mb-6 inline-block">
         Have a<br />question?
       </div>
-    
+  
       <!-- Fairy Image absolutely positioned -->
       <img src="images/iris.png" alt="Fairy" class="w-20 h-20 absolute top-20 left-2" />
-    
+      
       <!-- Email section -->
       <div class="mt-6">
         <div class="text-base font-semibold mb-2">email:</div>
@@ -64,7 +63,7 @@
           info@domain.hr
         </a>
       </div>
-    
+      
       <!-- Phone section -->
       <div class="mt-6">
         <div class="text-base font-semibold mb-2">phone:</div>
@@ -72,27 +71,30 @@
           +385 99 999 9999
         </div>
       </div>
-  
+    
     </div>
   </div>
-  
-  
-  </div>
+
+  <div id="footer"></div>
+
 
   <!-- Load header -->
   <script type="module">
     fetch('components/header.html')
-      .then(res => {
-        if (!res.ok) throw new Error("Component not found");
-        return res.text();
-      })
-      .then(html => {
-        document.getElementById('header-placeholder').innerHTML = html;
-      })
-      .catch(err => {
-        console.error("Failed to load header:", err);
-      });
+    .then(res => {
+      if (!res.ok) throw new Error("Component not found");
+      return res.text();
+    })
+    .then(html => {
+      document.getElementById('header-placeholder').innerHTML = html;
+    })
+    .catch(err => {
+      console.error("Failed to load header:", err);
+    });
   </script>
+
+  <script src="scripts/component-joiner.js"></script>
+  <script src="scripts/dropdownlist.js"></script>
 
 </body>
 </html>

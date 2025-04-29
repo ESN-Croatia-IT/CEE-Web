@@ -4,4 +4,4 @@ docs/
 css/
 export.scss
 export/
-src/output.css
+output.css

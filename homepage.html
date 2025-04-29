@@ -5,10 +5,12 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <script src="https://cdn.tailwindcss.com"></script>
     <title>Document</title>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet"/>
     <link href="/output.css" rel="stylesheet">
 </head>
-<body>
-    <script src="/scripts/component-joiner.js"></script>
+<body class="font-['Montserrat',sans-serif] font-[400]">
+
+    <!-- <div id="dropdownlist"></div> -->
 
     <img src="/images/corner-detail.png" class="">
 
@@ -17,7 +19,7 @@
     <div class="relative">
         <img src="/images/video-frame.png" class="w-full mt-2">
         <div class="absolute top-[27.5%] translate-x-[5%] w-[90%] h-[55%]">
-            <video autoplay muted class="rounded-xl">
+            <video autoplay loop muted class="rounded-xl">
                 <source src="/videos/CEE 2023 (trimmed).mp4" type="video/mp4">
             </video>
         </div>
@@ -96,9 +98,12 @@
             <p class="text-center">Fancy bus. bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla bla</p>
         </div>
     </div>
+
+    <footer id="footer" class="mt-8"></footer>
     
 
     <script src="/scripts/component-joiner.js"></script>
+    <script src="/scripts/dropdownlist.js"></script>
     
     <!--Countdown JS-->
     <script src="scripts/countdown.js"></script>
