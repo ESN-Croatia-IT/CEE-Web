@@ -1,25 +1,66 @@
-<!-- Header -->
-<header class="relative w-full bg-white">
-  <!-- Background Image (dynamic) -->
-  <img 
-    id="header-bg"
-    src="images/header_img1.png" 
-    alt="Header Image"
-    class="w-full h-auto transition-opacity duration-500 ease-in-out"
-  />
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Centered Circle Overlay -->
-  <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-    <div class="w-[164px] h-[164px] rounded-full border-[4px] border-[#3D409F] bg-white flex items-center justify-center shadow-md overflow-hidden">
+  <!-- Add custom CSS for the 500px breakpoint -->
+  <style>
+    /* Apply foggy effect starting at 500px */
+    @media (min-width: 500px) {
+      .foggy-overlay {
+        background-color: rgba(255, 255, 255, 0.4); /* semi-transparent white */
+        backdrop-filter: blur(10px); /* apply blur effect */
+      }
+    }
+  </style>
+</head>
+<body class="m-0 p-0">
+
+  <!-- HEADER -->
+  <header class="relative w-full overflow-hidden bg-white">
+
+    <!-- Image Container (controls layout) -->
+    <div class="relative w-full">
+      <!-- Responsive Image -->
       <img 
-        src="images/iris_flower.png" 
-        alt="Iris Flower" 
-        class="w-full h-full object-contain" 
+        src="../images/header_img1.png"
+        alt="Header Image"
+        class="w-full h-auto object-cover z-0 
+          sm:h-[50vh] md:h-[60vh] lg:h-[70vh] xl:h-[80vh]"
+        style="image-rendering: auto;"
       />
+
+      <!-- Foggy Overlay (applied from 500px and above) -->
+      <div class="absolute inset-0 z-5 foggy-overlay pointer-events-none"></div>
+
+      <!-- Centered Circle Over Image -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div class="
+          w-32 h-32  /* Default size for mobile */
+          sm:w-40 sm:h-40  /* Small screens (sm) */
+          md:w-52 md:h-52  /* Medium screens (md) */
+          lg:w-64 lg:h-64  /* Large screens (lg) */
+          xl:w-80 xl:h-80  /* Extra large screens (xl) */
+          rounded-full border-4 border-[#3D409F] 
+          bg-white flex items-center justify-center 
+          shadow-md overflow-hidden
+        ">
+          <img 
+            src="../images/iris_flower.png" 
+            alt="Iris Flower" 
+            class="w-full h-full object-contain" 
+          />
+        </div>
+      </div>
     </div>
-  </div>
-</header>
 
-<!-- Link to External JavaScript File -->
-<script src="change-bg.js"></script>
+  </header>
 
+  <script src="scripts/component-joiner.js"></script>
+  <script src="scripts/dropdownlist.js"></script>
+
+</body>
+</html>

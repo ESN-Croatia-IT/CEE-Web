@@ -1,4 +1,4 @@
-document.addEventListener("DOMContentLoaded", () => {
+/*document.addEventListener("DOMContentLoaded", () => {
     const bgImages = [
       "images/header_img1.png",
       "images/header_img2.png",
@@ -22,4 +22,4 @@ document.addEventListener("DOMContentLoaded", () => {
       }, 5000);
     }
   });
-  
+  */
