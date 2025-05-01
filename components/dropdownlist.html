@@ -19,11 +19,10 @@
   }
 </style>
 
-
 <!-- Mobile Hamburger Icon -->
 <div
   id="menu"
-  class="cursor-pointer relative z-50 mt-4 mr-4 float-right md:hidden"
+  class="cursor-pointer fixed top-4 right-4 z-50 mt-4 mr-4"
   onclick="toggleDropdown()"
 >
   <i class="fas fa-bars text-[32px] text-[#2E3192] transition-colors duration-700"></i>
@@ -32,12 +31,11 @@
 <!-- Dropdown Menu -->
 <div
   id="dropdown"
-  class="fixed flex flex-col items-center text-white text-center w-full bg-[#2E3192] px-5 pt-10 pb-5 top-[-100vh] transition-all duration-700 z-40 text-[24px] font-bold space-y-6 md:hidden"
+  class="fixed top-[-100vh] left-0 right-0 flex flex-col items-center text-white text-center w-full bg-[#2E3192] px-5 pt-10 pb-5 transition-all duration-700 z-40 text-[24px] font-bold space-y-6"
 >
   <p><a href="#menu" class="underline">Buy Tickets Now</a></p>
-  <p><a href="/homepage.html">&gt Homepage &lt</a></p>
-  <p><a href="#menu">Packages</a></p>
-  <p><a href="/contacts.html">Contact Us</a></p>
-  <p><a href="/about_us.html">Our Team</a></p>
-  <p><a href="/faq.html">FAQ</a></p>
+  <p><a href="../homepage.html">Homepage</a></p>
+  <p><a href="../contacts.html">About Us</a></p>
+  <p><a href="../faq.html">FAQ</a></p>
 </div>
+

@@ -1,19 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Responsive Header</title>
+  <script src="https://cdn.tailwindcss.com"></script>
 
-  <!-- Header -->
-  <header class="relative w-full bg-white">
-    <!-- Image that fits exactly, no crop or zoom -->
-    <img 
-      src="images/header_img1.png" 
-      alt="Header Image"
-      class="w-full h-auto"
-    />
+  <!-- Add custom CSS for the 500px breakpoint -->
+  <style>
+    /* Apply foggy effect starting at 500px */
+    @media (min-width: 500px) {
+      .foggy-overlay {
+        background-color: rgba(255, 255, 255, 0.4); /* semi-transparent white */
+        backdrop-filter: blur(10px); /* apply blur effect */
+      }
+    }
+  </style>
+</head>
+<body class="m-0 p-0">
 
-    <!-- Centered Circle Overlay -->
-    <div class="absolute left-1/2 top-1/2 transform -translate-x-1/2 -translate-y-1/2">
-      <div class="w-164 h-164 rounded-full border-[4px] border-[#3D409F] bg-white flex items-center justify-center shadow-md overflow-hidden">
-        <!-- Insert your image here (optional) -->
-        <img src="images/iris_flower.png" alt="Your image here" class="w-full h-full object-contain" />
+  <!-- HEADER -->
+  <header class="relative w-full overflow-hidden bg-white">
+
+    <!-- Image Container (controls layout) -->
+    <div class="relative w-full">
+      <!-- Responsive Image -->
+      <img 
+        src="../images/header_img1.png"
+        alt="Header Image"
+        class="w-full object-cover z-0 
+          h-[20vh]"
+        style="image-rendering: auto;"
+      />
+
+      <!-- Foggy Overlay (applied from 500px and above) -->
+      <div class="absolute inset-0 z-5 foggy-overlay pointer-events-none"></div>
+
+      <!-- Centered Circle Over Image -->
+      <div class="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 z-10">
+        <div class="
+          w-32 h-32  /* Default size for mobile */
+          sm:w-40 sm:h-40  /* Small screens (sm) */
+          md:w-52 md:h-52  /* Medium screens (md) */
+          rounded-full border-4 border-[#3D409F] 
+          bg-white flex items-center justify-center 
+          shadow-md overflow-hidden
+        ">
+          <img 
+            src="../images/iris_flower.png" 
+            alt="Iris Flower" 
+            class="w-full h-full object-contain" 
+          />
+        </div>
       </div>
     </div>
+
   </header>
 
+  <script src="scripts/component-joiner.js"></script>
+  <script src="scripts/dropdownlist.js"></script>
+
+</body>
+</html>
