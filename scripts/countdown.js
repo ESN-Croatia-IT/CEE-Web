@@ -1,5 +1,6 @@
 /**
  * Updates the countdown timer elements on the page.
+*/
 
 function updateCountdown() {
     const now = new Date();
@@ -23,5 +24,3 @@ function updateCountdown() {
 
 updateCountdown();
 setInterval(updateCountdown, 1000);
-
-*/
