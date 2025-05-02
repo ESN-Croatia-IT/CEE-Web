@@ -1,0 +1,41 @@
+<!-- Tailwind CDN -->
+<script src="https://cdn.tailwindcss.com"></script>
+
+<!-- Font Awesome -->
+<link
+  rel="stylesheet"
+  href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css"
+/>
+
+<!-- Google Fonts: Montserrat -->
+<link
+  href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;700&display=swap"
+  rel="stylesheet"
+/>
+
+<style>
+  body {
+    font-family: 'Montserrat', sans-serif;
+  }
+</style>
+
+<!-- Mobile Hamburger Icon -->
+<div
+  id="menu"
+  class="cursor-pointer fixed top-4 right-4 z-50 mt-4 mr-4"
+  onclick="toggleDropdown()"
+>
+  <i class="fas fa-bars text-[32px] text-[#2E3192] transition-colors duration-700"></i>
+</div>
+
+<!-- Dropdown Menu -->
+<div
+  id="dropdown"
+  class="fixed top-[-100vh] left-0 right-0 flex flex-col items-center text-white text-center w-full bg-[#2E3192] px-5 pt-10 pb-5 transition-all duration-700 z-40 text-[24px] font-bold space-y-6"
+>
+  <p><a href="https://www.noa-zrce.com/en/events/croatian-erasmus-event-2025" class="underline">Buy Tickets Now</a></p>
+  <p><a href="../homepage.html">Homepage</a></p>
+  <p><a href="../contacts.html">About Us</a></p>
+  <p><a href="../faq.html">FAQ</a></p>
+</div>
+
