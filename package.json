@@ -33,6 +33,7 @@
     "build:css": "npx tailwindcss -i ./src/input.css -o ./output.css --minify"
   },
   "devDependencies": {
+    "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^3.4.17"
   }
 }
