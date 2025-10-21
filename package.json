@@ -4,14 +4,19 @@
   "description": "",
   "license": "ISC",
   "author": {
-    "name": "Luka Šulc",
-    "email": "lukasulc0@gmail.com",
-    "url": "https://lukasulc.pages.dev/"
+    "name": "ESN Croatia",
+    "email": "webmaster@esn.hr",
+    "url": "https://esn.hr"
   },
   "contributors": [
     {
       "name": "Marin Prusac",
       "url": "https://github.com/marinprusac"
+    },
+    {
+      "name": "Luka Šulc",
+      "email": "lukasulc0@gmail.com",
+      "url": "https://lukasulc.pages.dev/"
     },
     {
       "name": "Antonio Limov",
