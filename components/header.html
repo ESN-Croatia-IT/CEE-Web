@@ -4,11 +4,8 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Responsive Header</title>
-    <script src="https://cdn.tailwindcss.com"></script>
 
-    <!-- Add custom CSS for the 500px breakpoint -->
     <style>
-      /* Apply foggy effect starting at 500px */
       @media (min-width: 500px) {
         .foggy-overlay {
           background-color: rgba(
@@ -16,35 +13,31 @@
             255,
             255,
             0.4
-          ); /* semi-transparent white */
-          backdrop-filter: blur(10px); /* apply blur effect */
+          );
+          backdrop-filter: blur(10px);
         }
       }
     </style>
+
   </head>
   <body class="m-0 p-0">
-    <!-- HEADER -->
     <header class="relative w-full overflow-hidden bg-white">
-      <!-- Image Container (controls layout) -->
       <div class="relative w-full">
-        <!-- Responsive Image -->
         <img
-          src="../images/header_img1.png"
+          src="../images/perks/location.jpg"
           alt="Header Image"
-          class="z-0 h-[10rem] w-full object-cover sm:h-[12rem] md:h-[14rem]"
+          class="z-0 h-40 w-full object-cover sm:h-48 md:h-56"
           style="image-rendering: auto" />
 
-        <!-- Foggy Overlay (applied from 500px and above) -->
         <div
           class="z-5 foggy-overlay pointer-events-none absolute inset-0"></div>
 
-        <!-- Centered Circle Over Image -->
         <div
           class="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
           <div
-            class="/* Default size for mobile */ /* Small screens (sm) */ flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-[#3D409F] bg-white shadow-md sm:h-40 sm:w-40">
+            class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-esn-lightblue bg-white shadow-md sm:h-40 sm:w-40">
             <img
-              src="../images/iris_flower.png"
+              src="../images/flower/CEE_skii.png"
               alt="Iris Flower"
               class="h-full w-full object-contain" />
           </div>
@@ -52,7 +45,6 @@
       </div>
     </header>
 
-    <script src="scripts/component-joiner.js"></script>
     <script src="scripts/dropdownlist.js"></script>
   </body>
 </html>
