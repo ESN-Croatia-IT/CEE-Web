@@ -29,8 +29,8 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "setup": "npx tailwindcss -i ./src/input.css -o ./output.css --watch",
-    "build:css": "npx tailwindcss -i ./src/input.css -o ./output.css --minify"
+    "setup": "npx @tailwindcss/cli -i ./input.css -o ./output.css --watch",
+    "build:css": "npx @tailwindcss/cli -i ./input.css -o ./output.css --minify"
   },
   "devDependencies": {
     "prettier-plugin-tailwindcss": "^0.6.11",
