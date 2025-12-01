@@ -17,7 +17,9 @@
   </head>
   <body class="font-['Montserrat',sans-serif] font-normal">
     <div id="header-bg"></div>
-    <div id="dropdownlist"></div>
+
+    <%- include('partials/header')%>
+    <%- include('partials/dropdownlist')%>
 
     <div class="mt-4 text-center">
       <h1 class="text-esn-lightblue text-2xl font-bold">
@@ -120,10 +122,8 @@
       </div>
     </div>
 
-    <div id="footer"></div>
+    <%- include('partials/footer')%>
 
-    <script src="scripts/component-joiner.js"></script>
-    <script src="scripts/dropdownlist.js"></script>
     <script src="scripts/feedback.js"></script>
   </body>
 </html>

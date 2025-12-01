@@ -17,7 +17,10 @@
   </head>
   <body class="bg-white">
     <div id="header-bg"></div>
-    <div id="dropdownlist"></div>
+
+    <%- include('partials/header')%>
+    <%- include('partials/dropdownlist')%>
+
     <section class="min-h-screen py-5">
       <div class="container mx-auto flex flex-col justify-center px-4 md:px-8">
         <h2
@@ -191,9 +194,8 @@
         </div>
       </div>
     </section>
-    <div id="footer"></div>
-    <script src="/scripts/component-joiner.js"></script>
-    <script src="/scripts/dropdownlist.js"></script>
+    
+    <%- include('partials/footer')%>
     <script src="/scripts/faq-toggle.js"></script>
     <script src="scripts/feedback.js"></script>
   </body>

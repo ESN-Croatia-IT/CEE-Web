@@ -22,7 +22,7 @@
       class="fixed inset-0 -top-[10%] -left-[10%] -z-10 h-[120%] w-[120%] bg-cover bg-center bg-no-repeat blur-md brightness-110"
       style="background-image: url('/images/perks/location.jpg')"></div>
 
-    <div id="dropdownlist"></div>
+    <%- include('partials/dropdownlist')%>
 
     <img
       src="/images/full_logos/CEE_skii_full.png"
@@ -206,9 +206,8 @@
       </div>
     </div>
 
-    <footer id="footer" class="mt-10"></footer>
-    <script src="/scripts/component-joiner.js"></script>
-    <script src="/scripts/dropdownlist.js"></script>
+    <%- include('partials/footer')%>
+
     <script src="scripts/countdown.js"></script>
     <script src="scripts/feedback.js"></script>
   </body>
