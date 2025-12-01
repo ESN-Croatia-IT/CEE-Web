@@ -22,90 +22,39 @@
     <%- include('partials/dropdownlist')%>
 
     <div class="mt-4 text-center">
-      <h1 class="text-esn-lightblue text-2xl font-bold">
+      <h1 class="text-<%=accentColour%> text-2xl font-bold">
         Organizing Committee (OC)
       </h1>
     </div>
-
-    <div
-      class="mx-[4%] mt-5 flex w-11/12 flex-wrap justify-center rounded-xl md:mx-[12.5%] md:w-9/12">
+    
+    <div class="mx-[4%] mt-5 flex w-11/12 flex-wrap justify-center rounded-xl md:mx-[12.5%] md:w-9/12">
+      <% for (let i = 0; i < oc.length; i++) { %>
       <div class="mx-20 my-7 flex flex-col items-center">
-        <h2 class="text-esn-lightblue-darkened mb-3 text-base font-semibold">
-          Iva Pranić
+        <h2 class="text-<%=accentColour%>-darkened mb-3 text-base font-semibold">
+          <%= oc[i].name %>
         </h2>
         <div
-          class="border-esn-lightblue mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
-          <img src="images/oc/iva_pranic.jpeg" />
+          class="border-<%=accentColour%> mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
+          <img src="<%=oc[i].image%>" />
         </div>
-        <p class="text-s text-esn-lightblue-darkened text-center leading-4">
-          Head of OC
+        <p class="text-s text-<%=accentColour%>-darkened text-center leading-4">
+          <%= oc[i].role %>
         </p>
       </div>
-
-      <div class="mx-20 my-7 flex flex-col items-center">
-        <h2 class="text-esn-lightblue-darkened mb-3 text-base font-semibold">
-          Domagoj Međeši
-        </h2>
-        <div
-          class="border-esn-lightblue mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
-          <img src="images/oc/domagoj_medesi.jpeg" />
-        </div>
-        <p class="text-s text-esn-lightblue-darkened text-center leading-4">
-          Vice-head of OC
-        </p>
-      </div>
-
-      <div class="mx-20 my-7 flex flex-col items-center">
-        <h2 class="text-esn-lightblue-darkened mb-3 text-base font-semibold">
-          Ivana Pende
-        </h2>
-        <div
-          class="border-esn-lightblue mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
-          <img src="images/oc/ivana_pende.jpeg" />
-        </div>
-        <p class="text-s text-esn-lightblue-darkened text-center leading-4">
-          Partnership Manager
-        </p>
-      </div>
-
-      <div class="mx-20 my-7 flex flex-col items-center">
-        <h2 class="text-esn-lightblue-darkened mb-3 text-base font-semibold">
-          Andi Marković
-        </h2>
-        <div
-          class="border-esn-lightblue mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
-          <img src="images/oc/andi_markovic.jpeg" />
-        </div>
-        <p class="text-s text-esn-lightblue-darkened text-center leading-4">
-          Communication Manager
-        </p>
-      </div>
-
-      <div class="mx-20 my-7 flex flex-col items-center">
-        <h2 class="text-esn-lightblue-darkened mb-3 text-base font-semibold">
-          Ana Batinić
-        </h2>
-        <div
-          class="border-esn-lightblue mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
-          <img src="images/oc/ana_batinic.jpeg" />
-        </div>
-        <p class="text-s text-esn-lightblue-darkened text-center leading-4">
-          Treasurer
-        </p>
-      </div>
+      <% } %>
     </div>
 
     <div
       class="mx-[4%] my-4 flex w-11/12 justify-center md:mx-[12.5%] md:w-9/12">
       <div class="relative overflow-hidden rounded-xl p-6 text-center">
         <div
-          class="bg-esn-lightblue-lightened text-esn-lightblue mb-4 inline-block rounded-md px-4 py-2 text-xl font-bold">
+          class="bg-<%=accentColour%>-lightened text-<%=accentColour%> mb-4 inline-block rounded-md px-4 py-2 text-xl font-bold">
           Have a question?
         </div>
 
         <div class="mb-2 text-base font-bold">
           Check out the
-          <a href="faq.html" class="text-esn-lightblue underline">FAQ</a>
+          <a href="/faq" class="text-<%=accentColour%> underline">FAQ</a>
           .
         </div>
         <div class="mb-2 text-base">or</div>
@@ -115,15 +64,14 @@
         <div class="mb-2 text-base">or</div>
         <div class="text-base font-bold">DM us on Instagram:</div>
         <a
-          href="https://www.instagram.com/croatianerasmusevent/?utm_source=chatgpt.com"
-          class="text-esn-lightblue font-bold underline">
+          href="https://www.instagram.com/croatianerasmusevent/"
+          class="text-<%=accentColour%> font-bold underline">
           @croatianerasmusevent
         </a>
       </div>
     </div>
 
+    <%- include('partials/userback')%>
     <%- include('partials/footer')%>
-
-    <script src="scripts/feedback.js"></script>
   </body>
 </html>

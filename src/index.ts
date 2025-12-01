@@ -1,27 +1,137 @@
 import express from 'express';
 import path from 'path';
 
-
 const app = express();
 const PORT = process.env.PORT || 3000;
 
+const data = {
+  ticketsLink:
+    'https://ski2go.eu/tour/studentsko-skijanje-kranjska-gora-erasmus/',
+  ticketsAvailable: true,
+  eventDate: '2026-01-23',
+  accentColour: "esn-darkblue",
+  fullLogo: '/images/full_logos/CEE_dalmatian_full.png',
+  fairy: '/images/fairies/CEE_fairy_darkblue.png',
+  icon: '/images/icons/CEE_dalmatian.ico',
+  logo: '/images/flower/CEE_dalmatian.png',
+  buyFrame: '/images/details/buy_frame_darkblue.png',
+  background: '/images/perks/location copy.jpg',
+  perks: [
+    {
+      title: 'Kranjska Gora',
+      description:
+        "Located in the heart of the Julian Alps, Kranjska Gora is Slovenia's best-known alpine resort . In winter, it becomes a lively ski destination with around 20 kilometres of slopes and modern lifts . Beyond skiing, visitors can enjoy cross-country trails, snowshoeing, and cosy mountain lodges.",
+      image: '/images/perks/location copy.jpg',
+    },
+    {
+      title: 'Hotel Alpina',
+      description:
+        "Located just steps away from the ski lifts , it's an ideal choice for winter sports enthusiasts. The hotel features cosy rooms with beautiful mountain views, a wellness area with sauna and massage options, and a restaurant serving traditional Slovenian and international dishes.",
+      image: '/images/perks/hotel.jpg',
+    },
+    {
+      title: 'Transport to Kranjska Gora',
+      description:
+        'We have organized transport from Zagreb and Split . Transport from Zagreb is included in the package and transport from Split is paid a little extra.',
+      image: '/images/perks/transport.png',
+    },
+    {
+      title: 'Food',
+      description:
+        'Guests can enjoy two meals a day - breakfast and dinner - both served in the form of a generous buffet with a wide selection of dishes. The menu also includes vegetarian options . You are also more than welcome to bring your own snacks and drinks.',
+      image: '/images/perks/food.jpg',
+    },
+  ],
+  oc: [
+    {
+      name: 'Iva Pranić',
+      role: 'Head of OC',
+      image: '/images/oc/iva_pranic.jpeg',
+    },
+    {
+      name: 'Domagoj Međeši',
+      role: 'Vice-head of OC',
+      image: '/images/oc/domagoj_medesi.jpeg',
+    },
+    {
+      name: 'Ivana Pende',
+      role: 'Partnership Manager',
+      image: '/images/oc/ivana_pende.jpeg',
+    },
+    {
+      name: 'Andi Marković',
+      role: 'Communication Manager',
+      image: '/images/oc/andi_markovic.jpeg',
+    },
+    {
+      name: 'Ana Batinić',
+      role: 'Treasurer',
+      image: '/images/oc/ana_batinic.jpeg',
+    },
+  ],
+  faq: [
+    {
+      question: 'Who can attend the Croatian Erasmus Event?',
+      answer:
+        'This event is primarily for Erasmus students in Croatia, but anyone interested can buy a ticket and join the experience!',
+    },
+    {
+      question: 'Can I bring my own ski equipment?',
+      answer:
+        "Yes, you can bring your own equipment if you prefer. Just make sure it's properly packed and labeled for transport.",
+    },
+    {
+      question: 'Is ski equipment included in the price?',
+      answer:
+        'No, ski equipment rental is not included in the trip price. The full set (skis, boots, and poles) can be rented for €35 for the entire trip.',
+    },
+    {
+      question: 'What is après-ski?',
+      answer:
+        "Après-ski is a daytime party that takes place right after skiing, while the sun is still out. It's all about music, dancing, and making unforgettable memories with friends — the perfect way to end a day on the slopes!",
+    },
+    {
+      question: 'Are meals included in the trip?',
+      answer:
+        'Yes, breakfast and dinner are included each day. Lunch is not included, as most people eat on the slopes or grab something during the ski break.',
+    },
+    {
+      question: 'What are the evening activities like?',
+      answer:
+        'Every night there will be organized parties or social events. Expect themed parties, music, and lots of fun moments to share with your Erasmus friends!',
+    },
+    {
+      question: 'What kind of accommodation will we have?',
+      answer:
+        "We'll be staying at Hotel Alpina in Kranjska Gora, a cozy mountain hotel located right next to the ski slopes. The hotel offers comfortable rooms with private bathrooms, Wi-Fi, and beautiful views of the surrounding Alps. Guests can also enjoy a wellness area with a sauna and spa facilities, as well as a restaurant serving delicious local and international dishes. It's the perfect place to relax and recharge after a fun day on the slopes.",
+    },
+    {
+      question: 'Is snowboarding also included or allowed on the trip?',
+      answer:
+        'Yes, absolutely! Snowboarders are more than welcome to join. There is also an option to attend snowboarding lessons for those who want to learn or improve their skills. Experienced riders are, of course, free to snowboard independently on the slopes.',
+    },
+    {
+      question: 'Do you have organized transportation?',
+      answer:
+        'Yes, transportation is organized, with departures from two locations: Split and Zagreb. The bus from Split has an additional cost of €40, but the price may increase if the bus is not fully booked.',
+    },
+  ],
+};
 
-app.set("view engine", "ejs");
-app.use(express.static(path.join(__dirname, "../dist/static")));
-app.set("views", path.join(__dirname, "../dist/views"));
-
-
+app.set('view engine', 'ejs');
+app.use(express.static(path.join(__dirname, '../dist/static')));
+app.set('views', path.join(__dirname, '../dist/views'));
 
 app.get('/', (_req, res) => {
-  res.render('homepage', {});
+  res.render('homepage', data);
 });
 
 app.get('/about', (_req, res) => {
-  res.render('about', {});
+  res.render('about', data);
 });
 
 app.get('/faq', (_req, res) => {
-  res.render('faq', {});
+  res.render('faq', data);
 });
 
 app.listen(PORT, () => {

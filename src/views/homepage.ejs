@@ -12,7 +12,7 @@
       id="favicon"
       rel="icon"
       type="image/x-icon"
-      href="images/favicons/CEE_skii.ico"
+      href="<%=icon%>"
       sizes="32x32" />
   </head>
   <body
@@ -20,80 +20,35 @@
     style="background-image: url('/images/perks/location.jpg')">
     <div
       class="fixed inset-0 -top-[10%] -left-[10%] -z-10 h-[120%] w-[120%] bg-cover bg-center bg-no-repeat blur-md brightness-110"
-      style="background-image: url('/images/perks/location.jpg')"></div>
+      style="background-image: url('<%=background%>')"></div>
 
     <%- include('partials/dropdownlist')%>
 
     <img
-      src="/images/full_logos/CEE_skii_full.png"
+      src="<%=fullLogo%>"
       class="mt-5 w-4/5 sm:ml-[30%] sm:w-1/3" />
 
     <h1
-      class="shadow-blue my-5 text-center text-4xl font-bold text-black sm:text-5xl md:text-6xl">
+      class="shadow-<%=accentColour%> my-5 text-center text-4xl font-bold text-black sm:text-5xl md:text-6xl">
       CEE you soon!
     </h1>
 
-    <div class="my-4 sm:my-8 md:my-18">
-      <div class="flex justify-center" id="countdown">
-        <div class="flex flex-col items-center">
-          <div
-            class="border-esn-lightblue m-2 flex h-16 w-16 items-center justify-center rounded-xl border-5 bg-white sm:mx-4 sm:h-24 sm:w-24 md:mx-6 md:h-32 md:w-32">
-            <span
-              class="text-esn-lightblue text-2xl font-bold sm:text-3xl md:text-4xl"
-              id="days">
-              50
-            </span>
-          </div>
-          <small class="text-base sm:text-2xl md:text-3xl">Days</small>
-        </div>
-        <div class="flex flex-col items-center">
-          <div
-            class="border-esn-lightblue m-2 flex h-16 w-16 items-center justify-center rounded-xl border-5 bg-white sm:mx-4 sm:h-24 sm:w-24 md:mx-6 md:h-32 md:w-32">
-            <span
-              class="text-esn-lightblue text-2xl font-bold sm:text-3xl md:text-4xl"
-              id="hours">
-              50
-            </span>
-          </div>
-          <small class="text-base sm:text-2xl md:text-3xl">Hours</small>
-        </div>
-        <div class="flex flex-col items-center">
-          <div
-            class="border-esn-lightblue m-2 flex h-16 w-16 items-center justify-center rounded-xl border-5 bg-white sm:mx-4 sm:h-24 sm:w-24 md:mx-6 md:h-32 md:w-32">
-            <span
-              class="text-esn-lightblue text-2xl font-bold sm:text-3xl md:text-4xl"
-              id="minutes">
-              50
-            </span>
-          </div>
-          <small class="text-base sm:text-2xl md:text-3xl">Minutes</small>
-        </div>
-        <div class="flex flex-col items-center">
-          <div
-            class="border-esn-lightblue m-2 flex h-16 w-16 items-center justify-center rounded-xl border-5 bg-white sm:mx-4 sm:h-24 sm:w-24 md:mx-6 md:h-32 md:w-32">
-            <span
-              class="text-esn-lightblue text-2xl font-bold sm:text-3xl md:text-4xl"
-              id="seconds">
-              50
-            </span>
-          </div>
-          <small class="text-base sm:text-2xl md:text-3xl">Seconds</small>
-        </div>
-      </div>
-    </div>
-
+    <%- include('partials/countdown')%>
+    
+    <% if (ticketsAvailable) { %>
     <div class="my-4 flex items-center justify-center sm:my-8 md:my-20">
       <img
-        src="/images/details/buy_frame_lightblue.png"
+        src="<%=buyFrame%>"
         class="w-[90%] lg:w-1/3" />
       <span
         class="absolute pb-2 text-lg font-bold text-white sm:text-xl md:text-2xl lg:text-3xl">
         <a
-          href="https://ski2go.eu/tour/studentsko-skijanje-kranjska-gora-erasmus/">
+          href="<%= ticketsLink %>"">
           Buy Tickets Now
         </a>
       </span>
     </div>
+    <% } %>
 
     <div class="mx-4 mt-12 text-center">
       <span class="text-2xl sm:text-3xl md:text-4xl">
@@ -101,96 +56,23 @@
       </span>
     </div>
 
+    <% for (let i = 0; i < perks.length; i++) { %>
     <div class="mx-16 mt-12">
       <div class="flex flex-col items-center justify-center sm:flex-row">
         <div
           class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
-          <img src="images/perks/location copy.jpg" />
+          <img src="<%= perks[i].image %>" />
         </div>
         <div
           class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
-          <div class="my-2 text-lg font-bold sm:m-0">Kranjska Gora</div>
+          <div class="my-2 text-lg font-bold sm:m-0"><%= perks[i].title %></div>
           <p>
-            Located in the heart of the Julian Alps, Kranjska Gora is
-            <span class="font-bold">Slovenia's best-known alpine resort</span>
-            . In winter, it becomes a lively ski destination with around
-            <span class="font-bold">
-              20 kilometres of slopes and modern lifts
-            </span>
-            . Beyond skiing, visitors can enjoy cross-country trails,
-            snowshoeing, and cosy mountain lodges.
+            <%= perks[i].description %>
           </p>
         </div>
       </div>
     </div>
-
-    <div class="mx-16 mt-12">
-      <div class="flex flex-col items-center justify-center sm:flex-row">
-        <div
-          class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
-          <img src="images/perks/hotel.jpg" />
-        </div>
-
-        <div
-          class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
-          <div class="my-2 text-lg font-bold sm:m-0">Hotel Alpina</div>
-          <p>
-            Located just
-            <span class="font-bold">steps away from the ski lifts</span>
-            , it's an ideal choice for winter sports enthusiasts. The hotel
-            features cosy rooms with beautiful mountain views, a
-            <span class="font-bold">wellness area</span>
-            with sauna and massage options, and a restaurant serving traditional
-            Slovenian and international dishes.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mx-16 mt-12">
-      <div class="flex flex-col items-center justify-center sm:flex-row">
-        <div
-          class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
-          <img src="images/perks/transport.png" />
-        </div>
-        <div
-          class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
-          <div class="my-2 text-lg font-bold sm:m-0">
-            Transport to Kranjska Gora
-          </div>
-          <p>
-            We have
-            <span class="font-bold">
-              organized transport from Zagreb and Split
-            </span>
-            . Transport from Zagreb is included in the package and transport
-            from Split is paid a little extra.
-          </p>
-        </div>
-      </div>
-    </div>
-
-    <div class="mx-16 mt-12">
-      <div class="flex flex-col items-center justify-center sm:flex-row">
-        <div
-          class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
-          <img src="images/perks/food.jpg" class="" />
-        </div>
-        <div
-          class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
-          <div class="my-2 text-lg font-bold sm:m-0">Food</div>
-          <p>
-            Guests can enjoy two meals a day -
-            <span class="font-bold">breakfast and dinner</span>
-            - both served in the form of a generous buffet with a wide selection
-            of dishes. The menu also
-            <span class="font-bold">includes vegetarian options</span>
-            . You are also more than welcome to bring your own snacks and
-            drinks.
-          </p>
-        </div>
-      </div>
-    </div>
+    <% } %>
 
     <div
       class="mx-[4%] my-4 flex w-11/12 justify-center md:mx-[12.5%] md:w-9/12">
@@ -199,16 +81,24 @@
           For more details, check out out Instagram page:
         </div>
         <a
-          href="https://www.instagram.com/croatianerasmusevent/?utm_source=chatgpt.com"
-          class="text-esn-lightblue-darkened font-bold underline">
+          href="https://www.instagram.com/croatianerasmusevent/"
+          class="text-<%=accentColour%>-darkened font-bold underline">
           @croatianerasmusevent
         </a>
       </div>
     </div>
 
+    <%- include('partials/userback')%>
     <%- include('partials/footer')%>
 
-    <script src="scripts/countdown.js"></script>
-    <script src="scripts/feedback.js"></script>
+
+          <!-- Color palette spans to prevent purging -->
+    <span class="text-esn-darkblue bg-esn-darkblue border-esn-darkblue"></span>
+    <span class="text-esn-darkblue-lightened bg-esn-darkblue-lightened border-esn-darkblue-lightened"></span>
+    <span class="text-esn-darkblue-darkened bg-esn-darkblue-darkened border-esn-darkblue-darkened"></span>
+    <span class="text-esn-lightblue bg-esn-lightblue border-esn-lightblue"></span>
+    <span class="text-esn-lightblue-lightened bg-esn-lightblue-lightened border-esn-lightblue-lightened"></span>
+    <span class="text-esn-lightblue-darkened bg-esn-lightblue-darkened border-esn-lightblue-darkened"></span>
+    
   </body>
 </html>
