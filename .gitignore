@@ -5,3 +5,4 @@ export.scss
 export/
 output.css
 dist
+.env

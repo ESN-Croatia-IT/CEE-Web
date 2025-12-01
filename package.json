@@ -36,12 +36,12 @@
   "scripts": {
     "dev:tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --watch",
     "dev:typescript": "tsc -w",
-    "dev:server": "nodemon dist/index.js",
+    "dev:server": "nodemon --env-file='.env' dist/index.js",
     "dev": "npm-run-all --parallel dev:tailwind dev:typescript dev:server",
     "build:tailwind": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
     "build:typescript": "tsc",
     "build": "npm-run-all build:tailwind build:typescript",
-    "start": "node dist/index.js",
+    "start": "node --env-file '.env' dist/index.js",
     "release": "npm-run-all build start"
   },
   "devDependencies": {
