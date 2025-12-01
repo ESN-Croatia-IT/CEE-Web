@@ -48,6 +48,7 @@
     "release": "npm-run-all build copy:all start"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.17",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.5",
     "@types/node": "^24.10.1",
@@ -59,7 +60,6 @@
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.15",
     "ejs": "^3.1.10",
     "express": "^5.2.0"
   }
