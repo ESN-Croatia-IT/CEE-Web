@@ -26,11 +26,11 @@ jobs:
 
       # 4. Build Tailwind CSS
       - name: Build Tailwind CSS
-        run: npm run build:tailwind
+        run: npm run build:css
 
       # 5. Compile TypeScript
       - name: Build TypeScript
-        run: npm run build:typescript
+        run: npm run build:ts
 
       # 6. Copy static assets & views
       - name: Copy static and views
