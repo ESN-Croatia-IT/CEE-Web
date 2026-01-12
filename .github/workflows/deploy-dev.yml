@@ -34,7 +34,7 @@ jobs:
 
       # 6. Copy static assets & views
       - name: Copy static and views
-        run: npm run copy:all
+        run: npm run copy
 
       # 7. Deploy dist + package files
       - name: Deploy to Dev Server
