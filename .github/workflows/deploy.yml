@@ -4,8 +4,7 @@ name: Build CSS and Deploy to Shared Hosting (Subdomain)
 on:
   push:
     branches:
-      - main
-      - dev
+      - none
 
 jobs:
   build-and-deploy:
