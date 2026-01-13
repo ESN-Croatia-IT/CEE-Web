@@ -1,0 +1,61 @@
+name: Dev Deploy
+
+on:
+  push:
+    branches:
+      - main
+
+jobs:
+  build-and-deploy:
+    runs-on: ubuntu-latest
+
+    steps:
+      # 1. Checkout repository
+      - name: Checkout repository
+        uses: actions/checkout@v3
+
+      # 2. Setup Node.js
+      - name: Setup Node.js
+        uses: actions/setup-node@v3
+        with:
+          node-version: '22'
+
+      # 3. Install dependencies for build
+      - name: Install dependencies
+        run: npm ci
+
+      # 4. Build Tailwind CSS
+      - name: Build Tailwind CSS
+        run: npm run build:css
+
+      # 5. Compile TypeScript
+      - name: Build TypeScript
+        run: npm run build:ts
+
+      # 6. Copy static assets & views
+      - name: Copy static and views
+        run: npm run copy
+
+      # 7. Install SSH key
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_HOST }}
+
+      # 8. Deploy dist + package files via SCP
+      - name: Deploy to Dev Server
+        uses: appleboy/scp-action@v0.1.5
+        with:
+          host: ${{ secrets.SSH_HOST }}
+          username: ${{ secrets.SSH_USER }}
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          port: 22
+          source: "dist,package.json,package-lock.json"
+          target: "${{ secrets.PRODUCTION_PATH }}/"
+
+      # 9. Install production dependencies on server
+      - name: Install production dependencies on server
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+          "source ${{ secrets.PRODUCTION_VENV_PATH }} && cd ${{ secrets.PRODUCTION_PATH }} && npm ci --production"
