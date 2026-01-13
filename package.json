@@ -43,7 +43,7 @@
     "copy:data": "cpy 'src/data.json' 'dist/' --flat",
     "copy": "npm-run-all copy:*",
 
-    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/output.css --minify",
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/static/output.css --minify",
     "build:ts": "tsc",
     "build": "npm-run-all build:* copy",
 
