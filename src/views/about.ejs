@@ -1,0 +1,77 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <title>Our Team and Contact Us</title>
+    <link
+      id="favicon"
+      rel="icon"
+      type="image/x-icon"
+      href="images/favicons/CEE_skii.ico"
+      sizes="32x32" />
+  </head>
+  <body class="font-['Montserrat',sans-serif] font-normal">
+    <div id="header-bg"></div>
+
+    <%- include('partials/header')%>
+    <%- include('partials/dropdownlist')%>
+
+    <div class="mt-4 text-center">
+      <h1 class="text-<%=accentColour%> text-2xl font-bold">
+        Organizing Committee (OC)
+      </h1>
+    </div>
+    
+    <div class="mx-[4%] mt-5 flex w-11/12 flex-wrap justify-center rounded-xl md:mx-[12.5%] md:w-9/12">
+      <% for (let i = 0; i < oc.length; i++) { %>
+      <div class="mx-20 my-7 flex flex-col items-center">
+        <h2 class="text-<%=accentColour%>-darkened mb-3 text-base font-semibold">
+          <%= oc[i].name %>
+        </h2>
+        <div
+          class="border-<%=accentColour%> mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
+          <img src="<%=oc[i].image%>" />
+        </div>
+        <p class="text-s text-<%=accentColour%>-darkened text-center leading-4">
+          <%= oc[i].role %>
+        </p>
+      </div>
+      <% } %>
+    </div>
+
+    <div
+      class="mx-[4%] my-4 flex w-11/12 justify-center md:mx-[12.5%] md:w-9/12">
+      <div class="relative overflow-hidden rounded-xl p-6 text-center">
+        <div
+          class="bg-<%=accentColour%>-lightened text-<%=accentColour%> mb-4 inline-block rounded-md px-4 py-2 text-xl font-bold">
+          Have a question?
+        </div>
+
+        <div class="mb-2 text-base font-bold">
+          Check out the
+          <a href="/faq" class="text-<%=accentColour%> underline">FAQ</a>
+          .
+        </div>
+        <div class="mb-2 text-base">or</div>
+        <div class="mb-2 text-base font-bold">
+          Use the contact option in the bottom right corner.
+        </div>
+        <div class="mb-2 text-base">or</div>
+        <div class="text-base font-bold">DM us on Instagram:</div>
+        <a
+          href="https://www.instagram.com/croatianerasmusevent/"
+          class="text-<%=accentColour%> font-bold underline">
+          @croatianerasmusevent
+        </a>
+      </div>
+    </div>
+
+    <%- include('partials/userback')%>
+    <%- include('partials/footer')%>
+  </body>
+</html>

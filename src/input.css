@@ -1,0 +1,31 @@
+/* @tailwind base;
+@tailwind components;
+@tailwind utilities; */
+@import 'tailwindcss';
+
+@layer {
+  .shadow-esn-darkblue {
+    text-shadow: 2px 2px 0px #2e3192;
+  }
+
+  .shadow-esn-lightblue {
+    text-shadow: 2px 2px 0px #00aeef;
+  }
+
+  .shadow-gray {
+    box-shadow: 2px 2px 0px #555555;
+  }
+}
+
+@theme {
+  --color-esn-lightblue: #00aeef;
+  --color-esn-lightblue-lightened: #bbedff;
+  --color-esn-lightblue-darkened: #005777;
+  --color-esn-darkblue: #2e3192;
+  --color-esn-darkblue-lightened: #c3c4ec;
+  --color-esn-darkblue-darkened: #171849;
+  /*
+  lightened colours are 75% lightened
+  darkened colours are 50% darkened
+  */
+}

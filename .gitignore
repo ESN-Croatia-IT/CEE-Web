@@ -1,7 +1,9 @@
 .log/
 node_modules/
 docs/
-css/
 export.scss
 export/
 output.css
+dist
+.env
+.htaccess

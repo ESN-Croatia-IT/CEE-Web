@@ -34,14 +34,37 @@
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "setup": "npx @tailwindcss/cli -i ./input.css -o ./output.css --watch",
-    "build:css": "npx @tailwindcss/cli -i ./input.css -o ./output.css --minify"
+    "dev:css": "tailwindcss -i src/input.css -o src/static/output.css --watch",
+    "dev:ts": "tsx watch src/index.ts",
+    "dev": "npm-run-all --parallel dev:*",
+
+    "copy:static": "cpy 'src/static/**/*' 'dist/static/'",
+    "copy:views": "cpy 'src/views/**/*' 'dist/views/'",
+    "copy:data": "cpy 'src/data.json' 'dist/' --flat",
+    "copy": "npm-run-all copy:*",
+
+    "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/static/output.css --minify",
+    "build:ts": "tsc",
+    "build": "npm-run-all build:* copy",
+
+    "start": "node --env-file '.env' dist/index.js",
+    "release": "npm-run-all build start"
   },
   "devDependencies": {
+    "@tailwindcss/cli": "^4.1.17",
+    "@types/ejs": "^3.1.5",
+    "@types/express": "^5.0.5",
+    "@types/node": "^24.10.1",
+    "cpy-cli": "^6.0.0",
+    "nodemon": "^3.1.11",
+    "npm-run-all": "^4.1.5",
     "prettier-plugin-tailwindcss": "^0.6.11",
-    "tailwindcss": "^4.1.15"
+    "tailwindcss": "^4.1.15",
+    "tsx": "^4.21.0",
+    "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@tailwindcss/cli": "^4.1.15"
+    "ejs": "^3.1.10",
+    "express": "^5.2.0"
   }
 }

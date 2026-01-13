@@ -1,0 +1,104 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Croatian Erasmus Event</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <link href="output.css" rel="stylesheet" />
+    <link
+      id="favicon"
+      rel="icon"
+      type="image/x-icon"
+      href="<%=icon%>"
+      sizes="32x32" />
+  </head>
+  <body
+    class="relative font-['Montserrat',sans-serif]"
+    style="background-image: url('/images/perks/location.jpg')">
+    <div
+      class="fixed inset-0 -top-[10%] -left-[10%] -z-10 h-[120%] w-[120%] bg-cover bg-center bg-no-repeat blur-md brightness-110"
+      style="background-image: url('<%=background%>')"></div>
+
+    <%- include('partials/dropdownlist')%>
+
+    <img
+      src="<%=fullLogo%>"
+      class="mt-5 w-4/5 sm:ml-[30%] sm:w-1/3" />
+
+    <h1
+      class="shadow-<%=accentColour%> my-5 text-center text-4xl font-bold text-black sm:text-5xl md:text-6xl">
+      CEE you soon!
+    </h1>
+
+    <%- include('partials/countdown')%>
+    
+    <% if (ticketsAvailable) { %>
+    <div class="my-4 flex items-center justify-center sm:my-8 md:my-20">
+      <img
+        src="<%=buyFrame%>"
+        class="w-[90%] lg:w-1/3" />
+      <span
+        class="absolute pb-2 text-lg font-bold text-white sm:text-xl md:text-2xl lg:text-3xl">
+        <a
+          href="<%= ticketsLink %>"">
+          Buy Tickets Now
+        </a>
+      </span>
+    </div>
+    <% } %>
+
+    <div class="mx-4 mt-12 text-center">
+      <span class="text-2xl sm:text-3xl md:text-4xl">
+        What are we offering?
+      </span>
+    </div>
+
+    <% for (let i = 0; i < perks.length; i++) { %>
+    <div class="mx-16 mt-12">
+      <div class="flex flex-col items-center justify-center sm:flex-row">
+        <div
+          class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
+          <img src="<%= perks[i].image %>" />
+        </div>
+        <div
+          class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
+          <div class="my-2 text-lg font-bold sm:m-0"><%= perks[i].title %></div>
+          <p>
+            <%= perks[i].description %>
+          </p>
+        </div>
+      </div>
+    </div>
+    <% } %>
+
+    <div
+      class="mx-[4%] my-4 flex w-11/12 justify-center md:mx-[12.5%] md:w-9/12">
+      <div class="relative overflow-hidden rounded-xl p-6 text-center">
+        <div class="mb-2 text-base font-bold">
+          For more details, check out out Instagram page:
+        </div>
+        <a
+          href="https://www.instagram.com/croatianerasmusevent/"
+          class="text-<%=accentColour%>-darkened font-bold underline">
+          @croatianerasmusevent
+        </a>
+      </div>
+    </div>
+
+    <%- include('partials/userback')%>
+    <%- include('partials/footer')%>
+
+
+          <!-- Color palette spans to prevent purging -->
+    <span class="text-esn-darkblue bg-esn-darkblue border-esn-darkblue"></span>
+    <span class="text-esn-darkblue-lightened bg-esn-darkblue-lightened border-esn-darkblue-lightened"></span>
+    <span class="text-esn-darkblue-darkened bg-esn-darkblue-darkened border-esn-darkblue-darkened"></span>
+    <span class="text-esn-lightblue bg-esn-lightblue border-esn-lightblue"></span>
+    <span class="text-esn-lightblue-lightened bg-esn-lightblue-lightened border-esn-lightblue-lightened"></span>
+    <span class="text-esn-lightblue-darkened bg-esn-lightblue-darkened border-esn-lightblue-darkened"></span>
+    
+  </body>
+</html>

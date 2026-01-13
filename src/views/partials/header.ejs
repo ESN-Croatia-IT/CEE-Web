@@ -24,7 +24,7 @@
     <header class="relative w-full overflow-hidden bg-white">
       <div class="relative w-full">
         <img
-          src="../images/perks/location.jpg"
+          src="<%=background%>"
           alt="Header Image"
           class="z-0 h-40 w-full object-cover sm:h-48 md:h-56"
           style="image-rendering: auto" />
@@ -34,17 +34,18 @@
 
         <div
           class="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+          <a href="/">
           <div
-            class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-esn-lightblue bg-white shadow-md sm:h-40 sm:w-40">
+            class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-<%=accentColour%> bg-white shadow-md sm:h-40 sm:w-40">
             <img
-              src="../images/flower/CEE_skii.png"
+              src="<%=logo%>"
               alt="Iris Flower"
               class="h-full w-full object-contain" />
           </div>
+          </a>
         </div>
       </div>
     </header>
 
-    <script src="scripts/dropdownlist.js"></script>
   </body>
 </html>
