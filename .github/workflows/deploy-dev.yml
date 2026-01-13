@@ -36,7 +36,14 @@ jobs:
       - name: Copy static and views
         run: npm run copy
 
-      # 7. Deploy dist + package files
+      # 7. Install SSH key
+      - name: Install SSH Key
+        uses: shimataro/ssh-key-action@v2
+        with:
+          key: ${{ secrets.SSH_PRIVATE_KEY }}
+          known_hosts: ${{ secrets.SSH_HOST }}
+
+      # 8. Deploy dist + package files via SCP
       - name: Deploy to Dev Server
         uses: appleboy/scp-action@v0.1.5
         with:
@@ -44,12 +51,10 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "package.json,package-lock.json,dist"
+          source: "dist,package.json,package-lock.json"
           target: "${{ secrets.DEV_PATH }}/"
 
-      # 8. Install production dependencies on the server
+      # 9. Install production dependencies on server
       - name: Install production dependencies on server
-        run: |
-          ssh -i <(echo "${{ secrets.SSH_PRIVATE_KEY }}") -o StrictHostKeyChecking=no \
-          ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-          "cd ${{ secrets.DEV_PATH }} && npm ci --production"
+        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+             "cd ${{ secrets.DEV_PATH }} && npm ci --production"
