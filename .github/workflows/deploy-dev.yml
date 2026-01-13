@@ -44,7 +44,7 @@ jobs:
           username: ${{ secrets.SSH_USER }}
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           port: 22
-          source: "package.json"
+          source: "package.json,package-lock.json,dist"
           target: "${{ secrets.DEV_PATH }}/"
 
       # 8. Install production dependencies on the server
