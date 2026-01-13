@@ -56,5 +56,6 @@ jobs:
 
       # 9. Install production dependencies on server
       - name: Install production dependencies on server
-        run: ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-             "cd ${{ secrets.DEV_PATH }} && npm ci --production"
+        run: |
+          ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
+          "source ${{ secrets.DEV_VENV_PATH }} && cd ${{ secrets.DEV_PATH }} && npm ci --production"
