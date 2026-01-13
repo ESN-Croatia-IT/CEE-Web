@@ -2,12 +2,12 @@
   "ticketsLink": "https://ski2go.eu/tour/studentsko-skijanje-kranjska-gora-erasmus/",
   "ticketsAvailable": true,
   "eventDate": "2026-01-23",
-  "accentColour": "esn-darkblue",
-  "fullLogo": "/images/full_logos/CEE_dalmatian_full.png",
-  "fairy": "/images/fairies/CEE_fairy_darkblue.png",
-  "icon": "/images/icons/CEE_dalmatian.ico",
-  "logo": "/images/flower/CEE_dalmatian.png",
-  "buyFrame": "/images/details/buy_frame_darkblue.png",
+  "accentColour": "esn-lightblue",
+  "fullLogo": "/images/full_logos/CEE_skii_full.png",
+  "fairy": "/images/fairies/CEE_fairy_lightblue.png",
+  "icon": "/images/favicons/CEE_skii.ico",
+  "logo": "/images/flower/CEE_skii.png",
+  "buyFrame": "/images/details/buy_frame_lightblue.png",
   "background": "/images/perks/location copy.jpg",
   "perks": [
     {
