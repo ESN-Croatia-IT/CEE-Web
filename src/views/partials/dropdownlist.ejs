@@ -12,23 +12,25 @@
   }
 </style>
 
-<div
-  id="menu"
-  class="fixed top-4 right-4 z-50 mt-4 mr-4 cursor-pointer"
-  onclick="toggleDropdown()">
-  <i
-    class="fas fa-bars text-<%=accentColour%> text-[32px] transition-colors duration-700"></i>
+<div id="navbar" class="hidden md:flex bg-<%=accentColour%> fixed top-0 left-0 right-0 z-40 justify-around p-4 text-[24px] font-bold text-white">
+  <% if (ticketsAvailable) { %>
+  <a href="<%= ticketsLink %>" class="underline">Buy Tickets Now</a>
+  <% } %>
+  <a href="/">Homepage</a>
+  <a href="about">About Us</a>
+  <a href="faq">FAQ</a>
+  <a href="https://esn.hr">ESN Croatia</a>
 </div>
 
-<div
-  id="dropdown"
-  class="bg-<%=accentColour%> fixed top-[-100vh] right-0 left-0 z-40 flex w-full flex-col items-center space-y-6 px-5 pt-10 pb-5 text-center text-[24px] font-bold text-white transition-all duration-700">
+<div class="hidden md:block pt-24"></div>
+
+<div id="menu" class="fixed top-4 right-4 z-50 mt-4 mr-4 cursor-pointer md:hidden" onclick="toggleDropdown()">
+  <i class="fas fa-bars text-<%=accentColour%> text-[32px] transition-colors duration-700"></i>
+</div>
+
+<div id="dropdown" class="bg-<%=accentColour%> fixed top-[-100vh] right-0 left-0 z-40 flex w-full flex-col items-center space-y-6 px-5 pt-10 pb-5 text-center text-[24px] font-bold text-white transition-all duration-700">
   <% if (ticketsAvailable) { %>
-  <a
-    href="<%= ticketsLink %>"
-    class="underline">
-    Buy Tickets Now
-  </a>
+  <a href="<%= ticketsLink %>" class="underline">Buy Tickets Now</a>
   <% } %>
   <a href="/">Homepage</a>
   <a href="about">About Us</a>
