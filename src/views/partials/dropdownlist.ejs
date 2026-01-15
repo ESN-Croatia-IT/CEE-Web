@@ -10,16 +10,38 @@
   body {
     font-family: 'Montserrat', sans-serif;
   }
+  
+  .nav-link {
+    transition: opacity 0.3s ease;
+  }
+  
+  .nav-link.active {
+    border-bottom: 3px solid white;
+    padding-bottom: 5px;
+  }
+  
+  .cta-button {
+    background-color: rgba(255, 255, 255, 0.2);
+    padding: 8px 16px;
+    border-radius: 5px;
+    transition: background-color 0.3s ease;
+    text-decoration: none !important;
+    border: 2px solid white;
+  }
+  
+  .cta-button:hover {
+    background-color: rgba(255, 255, 255, 0.3);
+  }
 </style>
 
 <div id="navbar" class="hidden md:flex bg-<%=accentColour%> fixed top-0 left-0 right-0 z-40 justify-around p-4 text-[24px] font-bold text-white">
   <% if (ticketsAvailable) { %>
-  <a href="<%= ticketsLink %>" class="underline">Buy Tickets Now</a>
+  <a href="<%= ticketsLink %>" class="cta-button">Buy Tickets Now!</a>
   <% } %>
-  <a href="/">Homepage</a>
-  <a href="about">About Us</a>
-  <a href="faq">FAQ</a>
-  <a href="https://esn.hr">ESN Croatia</a>
+  <a href="/" class="nav-link" id="home-link">Homepage</a>
+  <a href="about" class="nav-link" id="about-link">About Us</a>
+  <a href="faq" class="nav-link" id="faq-link">FAQ</a>
+  <a href="https://esn.hr" class="nav-link">ESN Croatia</a>
 </div>
 
 <div class="hidden md:block pt-24"></div>
@@ -30,12 +52,12 @@
 
 <div id="dropdown" class="bg-<%=accentColour%> fixed top-[-100vh] right-0 left-0 z-40 flex w-full flex-col items-center space-y-6 px-5 pt-10 pb-5 text-center text-[24px] font-bold text-white transition-all duration-700">
   <% if (ticketsAvailable) { %>
-  <a href="<%= ticketsLink %>" class="underline">Buy Tickets Now</a>
+  <a href="<%= ticketsLink %>" class="cta-button">Buy Tickets Now!</a>
   <% } %>
-  <a href="/">Homepage</a>
-  <a href="about">About Us</a>
-  <a href="faq">FAQ</a>
-  <a href="https://esn.hr">ESN Croatia</a>
+  <a href="/" class="nav-link" id="home-link-mobile">Homepage</a>
+  <a href="about" class="nav-link" id="about-link-mobile">About Us</a>
+  <a href="faq" class="nav-link" id="faq-link-mobile">FAQ</a>
+  <a href="https://esn.hr" class="nav-link">ESN Croatia</a>
 </div>
 <script>
   function toggleDropdown() {
@@ -55,4 +77,21 @@
       icon.classList.add('text-[#2E3192]');
     }
   }
+  
+  function setActiveLink() {
+    const currentPage = window.location.pathname.split('/').pop() || '';
+    
+    if (currentPage === '' || currentPage === '/') {
+      document.getElementById('home-link').classList.add('active');
+      document.getElementById('home-link-mobile').classList.add('active');
+    } else if (currentPage === 'about' || currentPage.includes('about')) {
+      document.getElementById('about-link').classList.add('active');
+      document.getElementById('about-link-mobile').classList.add('active');
+    } else if (currentPage === 'faq' || currentPage.includes('faq')) {
+      document.getElementById('faq-link').classList.add('active');
+      document.getElementById('faq-link-mobile').classList.add('active');
+    }
+  }
+  
+  document.addEventListener('DOMContentLoaded', setActiveLink);
 </script>
