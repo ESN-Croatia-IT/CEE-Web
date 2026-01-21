@@ -1,6 +1,11 @@
 import express from 'express';
 import path from 'path';
 import { readFileSync, writeFileSync } from 'fs';
+import cookieParser from 'cookie-parser'; 
+import session from 'express-session';
+import crypto from "crypto";
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -53,9 +58,32 @@ function saveData(data: Data) {
   writeFileSync(DATA_PATH, raw);
 }
 
+export function generatePKCE() {
+  const verifier = crypto.randomBytes(32).toString("base64url");
 
-app.set('view engine', 'ejs');
+  const challenge = crypto
+    .createHash("sha256")
+    .update(verifier)
+    .digest("base64url");
+
+  return { verifier, challenge };
+}
+
+app.use(express.json());
 app.use(express.static(STATIC_PATH));
+app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'default',
+  saveUninitialized: false,
+  resave: false,
+  cookie: {
+    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
+    secure: true,
+    httpOnly: true,
+  }
+}));
+app.set("trust proxy", 1);
+app.set('view engine', 'ejs');
 app.set('views', VIEWS_PATH);
 
 app.get('/', (_req, res) => {
