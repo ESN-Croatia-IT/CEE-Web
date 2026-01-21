@@ -142,20 +142,24 @@ app.get("/callback", async (req, res) => {
   }
 
   try {
+    const credentials = Buffer.from(
+      `${process.env.ESN_CLIENT_ID}:${process.env.ESN_CLIENT_SECRET}`
+    ).toString("base64");
+
     const tokenRes = await fetch(TOKEN_URL, {
       method: "POST",
       headers: {
         "Content-Type": "application/x-www-form-urlencoded",
+        "Authorization": `Basic ${credentials}`,
       },
       body: new URLSearchParams({
         grant_type: "authorization_code",
-        client_id: process.env.ESN_CLIENT_ID!,
-        client_secret: process.env.ESN_CLIENT_SECRET!,
         redirect_uri: CALLBACK_URL,
         code,
         code_verifier: verifier,
       }),
     });
+
 
     const token = await tokenRes.json();
 
