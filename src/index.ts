@@ -13,6 +13,13 @@ const PORT = process.env.PORT || 3000;
 const DATA_PATH = path.join(__dirname, 'data.json');
 const STATIC_PATH = path.join(__dirname, 'static');
 const VIEWS_PATH = path.join(__dirname, 'views'); 
+const AUTH_URL = "https://accounts.esn.org/oauth/authorize";
+const CALLBACK_URL = "https://dev.cee.esn.hr/callback";
+const SCOPE = "oauth2_access_to_profile_information";
+const USERINFO_URL = "https://accounts.esn.org/oauth/v1/userinfo";
+const TOKEN_URL = "https://accounts.esn.org/oauth/token";
+
+
 
 interface Perk {
   title: string;
@@ -45,6 +52,17 @@ interface Data {
   perks: Perk[];
   oc: Volunteer[];
   faq: QuestionAnswer[];
+}
+
+declare module "express-session" {
+  interface SessionData {
+    pkceVerifier?: string;
+    user?: {
+      esnId: string;
+      email: string;
+      name: string;
+    };
+  }
 }
 
 function getData(): Data {
@@ -96,6 +114,76 @@ app.get('/about', (_req, res) => {
 
 app.get('/faq', (_req, res) => {
   res.render('faq', getData());
+});
+
+app.get("/auth/esn", (req, res) => {
+  const { verifier, challenge } = generatePKCE();
+
+  req.session.pkceVerifier = verifier;
+
+  const params = new URLSearchParams({
+    response_type: "code",
+    client_id: process.env.ESN_CLIENT_ID!,
+    redirect_uri: CALLBACK_URL,
+    scope: SCOPE,
+    code_challenge: challenge,
+    code_challenge_method: "S256",
+  });
+
+  res.redirect(`${AUTH_URL}?${params.toString()}`);
+});
+
+app.get("/callback", async (req, res) => {
+  const code = req.query.code as string | undefined;
+  const verifier = req.session.pkceVerifier;
+
+  if (!code || !verifier) {
+    return res.status(400).send("Invalid OAuth state");
+  }
+
+  try {
+    const tokenRes = await fetch(TOKEN_URL, {
+      method: "POST",
+      headers: {
+        "Content-Type": "application/x-www-form-urlencoded",
+      },
+      body: new URLSearchParams({
+        grant_type: "authorization_code",
+        client_id: process.env.ESN_CLIENT_ID!,
+        client_secret: process.env.ESN_CLIENT_SECRET!,
+        redirect_uri: CALLBACK_URL,
+        code,
+        code_verifier: verifier,
+      }),
+    });
+
+    const token = await tokenRes.json();
+
+    if (!token.access_token) {
+      console.error(token);
+      return res.status(500).send("Token exchange failed");
+    }
+
+    const userRes = await fetch(USERINFO_URL, {
+      headers: {
+        Authorization: `Bearer ${token.access_token}`,
+      },
+    });
+
+    const profile = await userRes.json();
+
+    // Minimal example user
+    req.session.user = {
+      esnId: profile.sub,
+      email: profile.email,
+      name: profile.name,
+    };
+
+    res.redirect("/");
+  } catch (err) {
+    console.error(err);
+    res.status(500).send("OAuth failed");
+  }
 });
 
 app.listen(+PORT, '0.0.0.0', () => {
