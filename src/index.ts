@@ -51,13 +51,13 @@ declare module "express-session" {
   interface SessionData {
     user?: {
       userId: string;
-      email: string;
       name: string;
     };
   }
 }
 
 function requireAuthMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
+  console.log(req.session);
   if (req.session?.user?.userId == null) {
     return res.redirect("/login")
   }
@@ -77,14 +77,15 @@ function saveData(data: Data) {
 
 app.use(express.json());
 app.use(express.static(STATIC_PATH));
+app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
   secret: process.env.SESSION_SECRET || 'default',
   saveUninitialized: false,
   resave: false,
   cookie: {
-    maxAge: 30 * 24 * 60 * 60 * 1000, // 30 days
-    secure: true,
+    maxAge: 1000 * 60 * 60, // 1 hour
+    //secure: true,
     httpOnly: true,
   }
 }));
@@ -113,7 +114,7 @@ app.get("/login", async (req, res) => {
 // Login
 app.post("/login", async (req, res) => {
 
-
+  console.log(req.body);
 
   const { username, password } = req.body;
   const admin_username = process.env.ADMIN_USERNAME || 'admin';
@@ -123,12 +124,13 @@ app.post("/login", async (req, res) => {
 
   if (!match_username) return res.status(401).json({ error: "Invalid credentials" });
 
-  const match_password = await bcrypt.compare(password, admin_password);
+  //const match_password = await bcrypt.compare(password, admin_password);
+  const match_password = admin_password == password;
   if (!match_password) return res.status(401).json({ error: "Invalid credentials" });
 
-
-  req.session.user!.userId = admin_username;
-  res.json({ success: true });
+  req.session.user = { userId: admin_username, name: '' };
+  req.session.save();
+  return res.redirect('/user');
 });
 
 // Logout
@@ -140,7 +142,7 @@ app.post("/logout", (req, res) => {
   });
 });
 
-app.get('/user', (_req, res) => {
+app.get('/user', requireAuthMiddleware, (_req, res) => {
   res.send("Hi!");
 });
 
