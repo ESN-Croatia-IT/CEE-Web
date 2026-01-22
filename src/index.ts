@@ -3,7 +3,7 @@ import path from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import cookieParser from 'cookie-parser'; 
 import session from 'express-session';
-import crypto from "crypto";
+import bcrypt from 'bcrypt';
 
 
 
@@ -47,6 +47,23 @@ interface Data {
   faq: QuestionAnswer[];
 }
 
+declare module "express-session" {
+  interface SessionData {
+    user?: {
+      userId: string;
+      email: string;
+      name: string;
+    };
+  }
+}
+
+function requireAuthMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
+  if (req.session?.user?.userId == null) {
+    return res.redirect("/login")
+  }
+  next();
+}
+
 function getData(): Data {
   let raw = readFileSync(DATA_PATH, 'utf-8');
   let data = JSON.parse(raw);
@@ -56,17 +73,6 @@ function getData(): Data {
 function saveData(data: Data) {
   let raw = JSON.stringify(data);
   writeFileSync(DATA_PATH, raw);
-}
-
-export function generatePKCE() {
-  const verifier = crypto.randomBytes(32).toString("base64url");
-
-  const challenge = crypto
-    .createHash("sha256")
-    .update(verifier)
-    .digest("base64url");
-
-  return { verifier, challenge };
 }
 
 app.use(express.json());
@@ -82,7 +88,6 @@ app.use(session({
     httpOnly: true,
   }
 }));
-app.set("trust proxy", 1);
 app.set('view engine', 'ejs');
 app.set('views', VIEWS_PATH);
 
@@ -96,6 +101,47 @@ app.get('/about', (_req, res) => {
 
 app.get('/faq', (_req, res) => {
   res.render('faq', getData());
+});
+
+
+app.get("/login", async (req, res) => {
+  if(req.session?.user?.userId != null){
+  }
+  res.render('login', getData());
+});
+
+// Login
+app.post("/login", async (req, res) => {
+
+
+
+  const { username, password } = req.body;
+  const admin_username = process.env.ADMIN_USERNAME || 'admin';
+  const admin_password: string = process.env.ADMIN_PASSWORD || 'admin123';
+  
+  const match_username = admin_username == username;
+
+  if (!match_username) return res.status(401).json({ error: "Invalid credentials" });
+
+  const match_password = await bcrypt.compare(password, admin_password);
+  if (!match_password) return res.status(401).json({ error: "Invalid credentials" });
+
+
+  req.session.user!.userId = admin_username;
+  res.json({ success: true });
+});
+
+// Logout
+app.post("/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.status(500).json({ error: "Could not log out" });
+    res.clearCookie("sid");
+    res.json({ success: true });
+  });
+});
+
+app.get('/user', (_req, res) => {
+  res.send("Hi!");
 });
 
 app.listen(+PORT, '0.0.0.0', () => {

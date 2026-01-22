@@ -1,51 +1,39 @@
-<!doctype html>
-<html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Responsive Header</title>
+<style>
+  @media (min-width: 500px) {
+    .foggy-overlay {
+      background-color: rgba(
+        255,
+        255,
+        255,
+        0.4
+      );
+      backdrop-filter: blur(10px);
+    }
+  }
+</style>
 
-    <style>
-      @media (min-width: 500px) {
-        .foggy-overlay {
-          background-color: rgba(
-            255,
-            255,
-            255,
-            0.4
-          );
-          backdrop-filter: blur(10px);
-        }
-      }
-    </style>
+<header class="relative w-full overflow-hidden bg-white mb-8">
+  <div class="relative w-full">
+    <img
+      src="<%=background%>"
+      alt="Header Image"
+      class="z-0 h-40 w-full object-cover sm:h-48 md:h-56 md:mt-3"
+      style="image-rendering: auto" />
 
-  </head>
-  <body class="m-0 p-0">
-    <header class="relative w-full overflow-hidden bg-white">
-      <div class="relative w-full">
+    <div
+      class="z-5 foggy-overlay pointer-events-none absolute inset-0"></div>
+
+    <div
+      class="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
+      <a href="/">
+      <div
+        class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-<%=accentColour%> bg-white shadow-md sm:h-40 sm:w-40">
         <img
-          src="<%=background%>"
-          alt="Header Image"
-          class="z-0 h-40 w-full object-cover sm:h-48 md:h-56"
-          style="image-rendering: auto" />
-
-        <div
-          class="z-5 foggy-overlay pointer-events-none absolute inset-0"></div>
-
-        <div
-          class="absolute left-1/2 top-1/2 z-10 -translate-x-1/2 -translate-y-1/2">
-          <a href="/">
-          <div
-            class="flex h-32 w-32 items-center justify-center overflow-hidden rounded-full border-4 border-<%=accentColour%> bg-white shadow-md sm:h-40 sm:w-40">
-            <img
-              src="<%=logo%>"
-              alt="Iris Flower"
-              class="h-full w-full object-contain" />
-          </div>
-          </a>
-        </div>
+          src="<%=logo%>"
+          alt="Iris Flower"
+          class="h-full w-full object-contain" />
       </div>
-    </header>
-
-  </body>
-</html>
+      </a>
+    </div>
+  </div>
+</header>

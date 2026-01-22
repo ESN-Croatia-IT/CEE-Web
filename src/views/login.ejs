@@ -1,0 +1,35 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <title>Login</title>
+    <link
+      id="favicon"
+      rel="icon"
+      type="image/x-icon"
+      href="images/favicons/CEE_skii.ico"
+      sizes="32x32" />
+  </head>
+  <body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
+    <div id="header-bg"></div>
+
+    <%- include('partials/dropdownlist')%>
+    <%- include('partials/header')%>
+    
+    <main class="grow">
+        
+        <h1
+            class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
+            Login
+        </h1>
+    </main>
+
+
+    <%- include('partials/footer')%>
+  </body>
+</html>

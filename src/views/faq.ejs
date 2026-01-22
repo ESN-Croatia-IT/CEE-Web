@@ -15,16 +15,16 @@
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet" />
   </head>
-  <body class="bg-white md:pt-16">
+  <body class="min-h-screen flex flex-col bg-white md:pt-16">
 
     <%- include('partials/header')%> <%- include('partials/dropdownlist')%>
 
-    <section class="min-h-screen py-5">
+    <section class="py-5 grow">
       <div class="container mx-auto flex flex-col justify-center px-4 md:px-8">
-        <h2
+        <h1
           class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
           Frequently Asked Questions
-        </h2>
+        </h1>
         <div
           class="mx-[4%] flex w-11/12 flex-col sm:px-8 md:mx-[12.5%] md:w-9/12 lg:px-12 xl:px-32">
           <% for (let i = 0; i < faq.length; i++) { %>
@@ -45,7 +45,9 @@
         </div>
       </div>
     </section>
-    <%- include('partials/userback')%> <%- include('partials/footer')%>
+    <%- include('partials/userback')%>
+    <%- include('partials/footer')%>
+    
     <script>
       document.addEventListener('DOMContentLoaded', () => {
         const faqs = document.querySelectorAll('details');
