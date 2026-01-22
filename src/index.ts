@@ -4,6 +4,7 @@ import { readFileSync, writeFileSync } from 'fs';
 import cookieParser from 'cookie-parser'; 
 import session from 'express-session';
 import bcrypt from 'bcrypt';
+import { get } from 'http';
 
 
 
@@ -57,7 +58,6 @@ declare module "express-session" {
 }
 
 function requireAuthMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
-  console.log(req.session);
   if (req.session?.user?.userId == null) {
     return res.redirect("/login")
   }
@@ -107,14 +107,13 @@ app.get('/faq', (_req, res) => {
 
 app.get("/login", async (req, res) => {
   if(req.session?.user?.userId != null){
+    return res.redirect('/user');
   }
   res.render('login', getData());
 });
 
 // Login
 app.post("/login", async (req, res) => {
-
-  console.log(req.body);
 
   const { username, password } = req.body;
   const admin_username = process.env.ADMIN_USERNAME || 'admin';
@@ -136,14 +135,22 @@ app.post("/login", async (req, res) => {
 // Logout
 app.post("/logout", (req, res) => {
   req.session.destroy(err => {
-    if (err) return res.status(500).json({ error: "Could not log out" });
+    if (err) return res.redirect('/user');
     res.clearCookie("sid");
-    res.json({ success: true });
+    res.redirect('/login');
   });
 });
 
 app.get('/user', requireAuthMiddleware, (_req, res) => {
-  res.send("Hi!");
+  res.render('editor', getData());
+});
+
+app.post('/save', requireAuthMiddleware, (req, res) => {
+  let data: Data = getData();
+  let newAccentColour: string = req.body.accentColour;
+  data.accentColour = newAccentColour;
+  saveData(data);
+  res.redirect('/user');
 });
 
 app.listen(+PORT, '0.0.0.0', () => {

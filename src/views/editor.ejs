@@ -1,0 +1,108 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <link href="./output.css" rel="stylesheet" />
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <title>Login</title>
+    <link
+      id="favicon"
+      rel="icon"
+      type="image/x-icon"
+      href="images/favicons/CEE_skii.ico"
+      sizes="32x32" />
+  </head>
+  <body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
+    <div id="header-bg"></div>
+
+    <%- include('partials/dropdownlist')%>
+    <%- include('partials/header')%>
+    
+    <main class="grow">
+        <h1
+            class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
+            CEE Web Editor
+        </h1>
+
+
+        <form action="/save" method="post" class="w-11/12 max-w-2xl mx-auto mb-6 flex flex-col space-y-4 border-<%=accentColour%> rounded-lg border-2 p-6 shadow-lg">
+
+            <!-- radio button -->
+
+
+            
+            <fieldset>
+                <legend class="text-<%=accentColour%> font-bold mb-2">Select Accent Colour:</legend>
+                <div class="flex flex-col space-y-2">
+                    <label class="cursor-pointer flex items-center space-x-2">
+                        <input type="radio" name="accentColour" value="esn-lightblue" <%= accentColour === 'esn-lightblue' ? 'checked' : '' %> />
+                        <span class="text-esn-lightblue">Lightblue</span>
+                    </label>
+                    <label class="cursor-pointer flex items-center space-x-2">
+                        <input type="radio" name="accentColour" value="esn-darkblue" <%= accentColour === 'esn-darkblue' ? 'checked' : '' %> />
+                        <span class="text-esn-darkblue">Darkblue</span>
+                    </label>
+                    <label class="cursor-pointer flex items-center space-x-2">
+                        <input type="radio" name="accentColour" value="esn-pink" <%= accentColour === 'esn-pink' ? 'checked' : '' %> />
+                        <span class="text-esn-pink">Pink</span>
+                    </label>
+                    <label class="cursor-pointer flex items-center space-x-2">
+                        <input type="radio" name="accentColour" value="esn-orange" <%= accentColour === 'esn-orange' ? 'checked' : '' %> />
+                        <span class="text-esn-orange">Orange</span>
+                    </label>
+                    <label class="cursor-pointer flex items-center space-x-2">
+                        <input type="radio" name="accentColour" value="esn-green" <%= accentColour === 'esn-green' ? 'checked' : '' %> />
+                        <span class="text-esn-green">Green</span>
+                    </label>
+
+                </div>
+            </fieldset>
+
+            <% for(let i = 0; i < faq.length; i++) { %>
+                <div class="flex flex-col">
+                    <label class="font-bold text-<%=accentColour%> mb-2" for="faq-question-<%=i%>">FAQ Question <%=i + 1%>:</label>
+                    <input
+                        class="border-<%=accentColour%> rounded-lg border-2 p-2"
+                        type="text"
+                        id="faq-question-<%=i%>"
+                        name="faq-question-<%=i%>"
+                        value="<%=faq[i].question%>"
+                        required />
+                </div>
+                <div class="flex flex-col">
+                    <label class="font-bold text-<%=accentColour%> mb-2" for="faq-answer-<%=i%>">FAQ Answer <%=i + 1%>:</label>
+                    <textarea
+                        class="border-<%=accentColour%> rounded-lg border-2 p-2"
+                        id="faq-answer-<%=i%>"
+                        name="faq-answer-<%=i%>"
+                        rows="4"
+                        required><%=faq[i].answer%></textarea>
+                </div>
+            <% } %>
+
+            <button type="submit"
+                class="w-24 mx-auto mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-<%=accentColour%> text-white cursor-pointer">
+                Save
+            </button>
+        </form>
+
+
+        <form action="/logout" method="post" class="mb-4 w-11/12 max-w-xs mx-auto flex flex-col space-y-4 border-<%=accentColour%> rounded-lg border-2 p-6 shadow-lg">
+            <p>Logged in as ...</p>
+            <button type="submit"
+                class="w-24 mx-auto mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-white border-<%=accentColour%>-darkened border-3 text-<%=accentColour%>-darkened cursor-pointer"
+            > Logout </button>
+        </form>
+
+
+
+
+    </main>
+
+
+    <%- include('partials/footer')%>
+  </body>
+</html>

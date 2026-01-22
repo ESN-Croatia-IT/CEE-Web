@@ -2,6 +2,8 @@
 @tailwind components;
 @tailwind utilities; */
 @import 'tailwindcss';
+@source inline("{hover:,}{text,bg,border}-esn-{lightblue,darkblue,pink,orange,green}{-darkened,-lightened,}");
+
 
 @layer {
   .shadow-esn-darkblue {
@@ -24,6 +26,15 @@
   --color-esn-darkblue: #2e3192;
   --color-esn-darkblue-lightened: #c3c4ec;
   --color-esn-darkblue-darkened: #171849;
+  --color-esn-orange: #f47b20;
+  --color-esn-orange-lightened: #fcdec7;
+  --color-esn-orange-darkened: #833c06;
+  --color-esn-green: #7ac143;
+  --color-esn-green-lightened: #deefd0;
+  --color-esn-green-darkened: #3d6220;
+  --color-esn-pink: #ed008c;
+  --color-esn-pink-lightened: #ffbbe3;
+  --color-esn-pink-darkened: #760046; 
   /*
   lightened colours are 75% lightened
   darkened colours are 50% darkened
