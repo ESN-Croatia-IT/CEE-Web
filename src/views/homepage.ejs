@@ -31,12 +31,21 @@
       alt="Croatian Erasmus Event full logo"
       class="mt-5 md:mt-25 w-4/5 sm:ml-[30%] sm:w-1/3" />
 
-    <h1
-      class="shadow-<%=accentColour%> my-5 text-center text-4xl font-bold text-black sm:text-5xl md:text-6xl">
-      CEE you soon!
-    </h1>
-
-    <%- include('partials/countdown')%>
+      
+      <% const date = new Date(); %>
+      <% const eDate = new Date(eventDate); %>
+      <% if (date < eDate) { %>
+        <h1
+          class="shadow-<%=accentColour%> my-5 text-center text-3xl font-bold text-black sm:text-4xl md:text-5xl">
+          CEE you soon! 
+        </h1>
+        <%- include('partials/countdown')%>
+      <% } else { %>
+        <h1
+          class="shadow-<%=accentColour%> my-5 text-center text-3xl font-bold text-black sm:text-4xl md:text-5xl">
+          Thank you for joining us!
+        </h1>
+      <% } %>
     
     <% if (ticketsAvailable) { %>
     <div class="my-4 flex items-center justify-center sm:my-8 md:my-20">
