@@ -1,6 +1,12 @@
 import express from 'express';
 import path from 'path';
 import { readFileSync, writeFileSync } from 'fs';
+import cookieParser from 'cookie-parser'; 
+import session from 'express-session';
+import bcrypt from 'bcrypt';
+import { get } from 'http';
+
+
 
 const app = express();
 const PORT = process.env.PORT || 3000;
@@ -42,6 +48,22 @@ interface Data {
   faq: QuestionAnswer[];
 }
 
+declare module "express-session" {
+  interface SessionData {
+    user?: {
+      userId: string;
+      name: string;
+    };
+  }
+}
+
+function requireAuthMiddleware(req: express.Request, res: express.Response, next: express.NextFunction) {
+  if (req.session?.user?.userId == null) {
+    return res.redirect("/login")
+  }
+  next();
+}
+
 function getData(): Data {
   let raw = readFileSync(DATA_PATH, 'utf-8');
   let data = JSON.parse(raw);
@@ -53,9 +75,21 @@ function saveData(data: Data) {
   writeFileSync(DATA_PATH, raw);
 }
 
-
-app.set('view engine', 'ejs');
+app.use(express.json());
 app.use(express.static(STATIC_PATH));
+app.use(express.urlencoded({ extended: true }));
+app.use(cookieParser());
+app.use(session({
+  secret: process.env.SESSION_SECRET || 'default',
+  saveUninitialized: false,
+  resave: false,
+  cookie: {
+    maxAge: 1000 * 60 * 60, // 1 hour
+    //secure: true,
+    httpOnly: true,
+  }
+}));
+app.set('view engine', 'ejs');
 app.set('views', VIEWS_PATH);
 
 app.get('/', (_req, res) => {
@@ -68,6 +102,55 @@ app.get('/about', (_req, res) => {
 
 app.get('/faq', (_req, res) => {
   res.render('faq', getData());
+});
+
+
+app.get("/login", async (req, res) => {
+  if(req.session?.user?.userId != null){
+    return res.redirect('/user');
+  }
+  res.render('login', getData());
+});
+
+// Login
+app.post("/login", async (req, res) => {
+
+  const { username, password } = req.body;
+  const admin_username = process.env.ADMIN_USERNAME || 'admin';
+  const admin_password: string = process.env.ADMIN_PASSWORD || 'admin123';
+  
+  const match_username = admin_username == username;
+
+  if (!match_username) return res.status(401).json({ error: "Invalid credentials" });
+
+  //const match_password = await bcrypt.compare(password, admin_password);
+  const match_password = admin_password == password;
+  if (!match_password) return res.status(401).json({ error: "Invalid credentials" });
+
+  req.session.user = { userId: admin_username, name: '' };
+  req.session.save();
+  return res.redirect('/user');
+});
+
+// Logout
+app.post("/logout", (req, res) => {
+  req.session.destroy(err => {
+    if (err) return res.redirect('/user');
+    res.clearCookie("sid");
+    res.redirect('/login');
+  });
+});
+
+app.get('/user', requireAuthMiddleware, (_req, res) => {
+  res.render('editor', getData());
+});
+
+app.post('/save', requireAuthMiddleware, (req, res) => {
+  let data: Data = getData();
+  let newAccentColour: string = req.body.accentColour;
+  data.accentColour = newAccentColour;
+  saveData(data);
+  res.redirect('/user');
 });
 
 app.listen(+PORT, '0.0.0.0', () => {

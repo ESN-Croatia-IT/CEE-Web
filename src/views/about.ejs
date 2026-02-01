@@ -3,6 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Meet the Organising Committee behind the Croatian Erasmus Event. Learn about the team bringing this international student celebration to life." />
     <link href="./output.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
@@ -21,11 +22,10 @@
     <%- include('partials/header')%>
     <%- include('partials/dropdownlist')%>
 
-    <div class="mt-4 text-center">
-      <h1 class="text-<%=accentColour%> text-2xl font-bold">
-        Organizing Committee (OC)
+      <h1
+        class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
+        Organising committee (OC)
       </h1>
-    </div>
     
     <div class="mx-[4%] mt-5 flex w-11/12 flex-wrap justify-center rounded-xl md:mx-[12.5%] md:w-9/12">
       <% for (let i = 0; i < oc.length; i++) { %>
@@ -35,7 +35,7 @@
         </h2>
         <div
           class="border-<%=accentColour%> mb-4 h-48 w-48 overflow-hidden rounded-full border-4 bg-white">
-          <img src="<%=oc[i].image%>" />
+          <img src="<%=oc[i].image%>" alt="<%= oc[i].name %>, <%= oc[i].role %>" />
         </div>
         <p class="text-s text-<%=accentColour%>-darkened text-center leading-4">
           <%= oc[i].role %>
