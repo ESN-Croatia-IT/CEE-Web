@@ -64,10 +64,12 @@
   },
   "dependencies": {
     "@types/bcrypt": "^6.0.0",
+    "@types/multer": "^2.0.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "express": "^5.2.0",
-    "express-session": "^1.18.2"
+    "express-session": "^1.18.2",
+    "multer": "^2.0.2"
   }
 }

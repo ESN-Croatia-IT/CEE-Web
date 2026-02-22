@@ -1,0 +1,184 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Admin panel for the Croatian Erasmus Event. Edit event details, perks, FAQs, and organising committee information." />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <title>Login</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="/images/favicons/CEE_skii.ico" sizes="32x32" />
+</head>
+
+<body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
+    <div id="header-bg"></div>
+
+    <%- include('partials/editor-navigation')%>
+        <%- include('partials/header')%>
+
+            <main class="grow">
+                <h1 class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
+                    CEE Web Editor <i class="fa-solid fa-pencil"></i>
+                </h1>
+
+                <form action="/editor/appearance" method="post" enctype="multipart/form-data"
+                    class="w-11/12 max-w-3xl mx-auto mb-6 flex flex-col space-y-4 rounded-lg p-6">
+
+                    <div class="flex justify-between">
+
+                        <h2 class="text-<%=accentColour%> text-2xl font-bold mb-4 mt-6 inline">Appearance</h2>
+
+                        <div>
+                            <button type="submit" id="save-button"
+                                class="hidden w-24 mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-<%=accentColour%> text-white cursor-pointer">
+                                Save
+                            </button>
+                            <button type="button" id="cancel-button" onclick="location.reload()"
+                                class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
+                                Cancel
+                            </button>
+                        </div>
+
+                    </div>
+
+                    <div class="p-4 rounded-lg border-<%=accentColour%> border-dashed border-2 mb-4">
+
+                        <fieldset>
+                            <legend class="font-bold text-<%=accentColour%> mb-2 mr-2"> Accent Colour </legend>
+                            <div class="flex flex-col space-y-2">
+                                <label class="cursor-pointer flex items-center space-x-2">
+                                    <input type="radio" name="accentColour" value="esn-lightblue"
+                                        <%=accentColour==='esn-lightblue' ? 'checked' : '' %> />
+                                    <span class="text-esn-lightblue">Lightblue</span>
+                                </label>
+                                <label class="cursor-pointer flex items-center space-x-2">
+                                    <input type="radio" name="accentColour" value="esn-darkblue"
+                                        <%=accentColour==='esn-darkblue' ? 'checked' : '' %> />
+                                    <span class="text-esn-darkblue">Darkblue</span>
+                                </label>
+                                <label class="cursor-pointer flex items-center space-x-2">
+                                    <input type="radio" name="accentColour" value="esn-pink"
+                                        <%=accentColour==='esn-pink' ? 'checked' : '' %> />
+                                    <span class="text-esn-pink">Pink</span>
+                                </label>
+                                <label class="cursor-pointer flex items-center space-x-2">
+                                    <input type="radio" name="accentColour" value="esn-orange"
+                                        <%=accentColour==='esn-orange' ? 'checked' : '' %> />
+                                    <span class="text-esn-orange">Orange</span>
+                                </label>
+                                <label class="cursor-pointer flex items-center space-x-2">
+                                    <input type="radio" name="accentColour" value="esn-green"
+                                        <%=accentColour==='esn-green' ? 'checked' : '' %> />
+                                    <span class="text-esn-green">Green</span>
+                                </label>
+
+                            </div>
+                        </fieldset>
+                    </div>
+
+                    <div class="p-4 rounded-lg border-<%=accentColour%> border-dashed border-2 mb-4">
+                        <h3 class="font-bold text-<%=accentColour%> mb-2">Background</h3>
+                        <input type="file" name="background" id="background" accept="image/*" hidden
+                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full text-wrap" />
+                        <label class="text-<%=accentColour%> mr-2 flex gap-5 flex-wrap" for="background">
+                            <img src="<%=background%>" alt="Background Preview"
+                                class="preview mb-2 w-24 object-contain border-<%=accentColour%> rounded-lg border-2 p-2" />
+                            <p>
+                                Choose file...
+                            </p>
+                        </label>
+                    </div>
+
+                    <div class="p-4 rounded-lg border-<%=accentColour%> border-dashed border-2 mb-4">
+                        <h3 class="font-bold text-<%=accentColour%> mb-2">Full Logo</h3>
+                        <input type="file" name="fullLogo" id="fullLogo" accept="image/*" hidden
+                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full text-wrap" />
+                        <label class="text-<%=accentColour%> mr-2 flex gap-5 flex-wrap" for="fullLogo">
+                            <img src="<%=fullLogo%>" alt="Full Logo Preview"
+                                class="preview mb-2 w-24 object-contain border-<%=accentColour%> rounded-lg border-2 p-2" />
+                            <p>
+                                Choose file...
+                            </p>
+                        </label>
+                    </div>
+
+
+                    <div class="p-4 rounded-lg border-<%=accentColour%> border-dashed border-2 mb-4">
+                        <h3 class="font-bold text-<%=accentColour%> mb-2">Flower Logo</h3>
+                        <input type="file" name="flowerLogo" id="flowerLogo" accept="image/*" hidden
+                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full text-wrap" />
+                        <label class="text-<%=accentColour%> mr-2 flex gap-5 flex-wrap" for="flowerLogo">
+                            <img src="<%=logo%>" alt="Flower Logo Preview"
+                                class="preview mb-2 w-24 object-contain border-<%=accentColour%> rounded-lg border-2 p-2" />
+                            <p>
+                                Choose file...
+                            </p>
+                        </label>
+                    </div>
+
+
+                    <div class="p-4 rounded-lg border-<%=accentColour%> border-dashed border-2 mb-4">
+                        <h3 class="font-bold text-<%=accentColour%> mb-2">Fairy Logo</h3>
+                        <input type="file" name="fairyLogo" id="fairyLogo" accept="image/*" hidden
+                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full text-wrap" />
+                        <label class="text-<%=accentColour%> mr-2 flex gap-5 flex-wrap" for="fairyLogo">
+                            <img src="<%=fairy%>" alt="Fairy Logo Preview"
+                                class="preview mb-2 w-24 object-contain border-<%=accentColour%> rounded-lg border-2 p-2" />
+                            <p>
+                                Choose file...
+                            </p>
+                        </label>
+                    </div>
+
+
+                </form>
+
+
+            </main>
+
+
+            <%- include('partials/footer')%>
+</body>
+
+<script>
+
+    function anythingChanged() {
+        let submitButton = document.getElementById("save-button");
+        let cancelButton = document.getElementById("cancel-button");
+        submitButton.classList.remove("hidden");
+        cancelButton.classList.remove("hidden");
+    }
+
+    function onInputChanged(input) {
+        anythingChanged();
+    }
+
+    function refreshImage(preview) {
+        const file = this.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+
+    const all_inputs = document.getElementsByTagName("input");
+
+    for (let j = 0; j < all_inputs.length; j++) {
+        all_inputs[j].addEventListener("change", (event) => onInputChanged(event.target));
+    }
+
+    let inputs = document.querySelectorAll("input[type='file']");
+    inputs.forEach(input => {
+        let preview = input.parentNode.querySelector("img");
+        input.addEventListener("change", refreshImage.bind(input, preview));
+    });
+
+</script>
+
+</html>

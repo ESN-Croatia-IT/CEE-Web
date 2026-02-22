@@ -1,0 +1,246 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Admin panel for the Croatian Erasmus Event. Edit event details, perks, FAQs, and organising committee information." />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <title>Login</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="/images/favicons/CEE_skii.ico" sizes="32x32" />
+</head>
+
+<body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
+    <div id="header-bg"></div>
+
+    <%- include('partials/editor-navigation')%>
+        <%- include('partials/header')%>
+
+            <main class="grow">
+                <h1 class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
+                    CEE Web Editor <i class="fa-solid fa-pencil"></i>
+                </h1>
+
+
+                <form action="/editor/benefits" method="post"
+                    class="w-11/12 max-w-3xl mx-auto mb-6 flex flex-col space-y-4 rounded-lg p-6"
+                    enctype="multipart/form-data">
+                    <div class="flex justify-between">
+                        
+                        <h2 class="text-<%=accentColour%> text-2xl font-bold mb-4 mt-6 inline">Benefits</h2>
+
+                        <div>
+                            <button type="submit" id="save-button"
+                                class="hidden w-24 mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-<%=accentColour%> text-white cursor-pointer">
+                                Save
+                            </button>
+                            <button type="button" id="cancel-button"
+                            onclick="location.reload()"
+                                class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
+                                Cancel
+                            </button>
+                        </div>
+                    </div>
+
+
+                    <list id="benefits-list">
+
+                        <% for(let i=0; i < perks.length; i++) { %>
+
+                            <% let randomId=Math.random().toString(36).substring(2, 15); %>
+
+                                <div class="p-4 rounded-lg border-<%=accentColour%> border-dashed border-2 mb-4">
+
+
+                                    <div class="text-xl">
+                                        <span class="handle text-<%=accentColour%>-darkened cursor-move p-2">
+                                            <i class="fa-solid fa-grip-vertical"></i>
+                                        </span>
+
+                                        <button type="button" class="cursor-pointer text-<%=accentColour%>-darkened p-2"
+                                            onclick="remove(this)">
+                                            <i class="fa-solid fa-trash"></i>
+                                        </button>
+                                    </div>
+
+                                    <div>
+                                        <label class="font-bold text-<%=accentColour%> mb-2 mr-2"
+                                            for="benefit-name-<%=randomId%>">Benefit:</label>
+                                        <input
+                                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full"
+                                            type="text" name="benefit-name" id="benefit-name-<%=randomId%>"
+                                            value="<%=perks[i].title%>" required />
+                                    </div>
+
+                                    <div>
+                                        <label class="font-bold text-<%=accentColour%> mb-2 mr-2"
+                                            for="benefit-description-<%=randomId%>">Description:</label>
+                                        <textarea
+                                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full"
+                                            rows=4 name="benefit-description" id="benefit-description-<%=randomId%>"
+                                            required><%=perks[i].description%></textarea>
+                                    </div>
+
+
+                                    <div>
+                                        <h3 class="font-bold text-<%=accentColour%> mb-2">Photo:</h3>
+                                        <input type="hidden" name="benefit-default-image" value="<%=perks[i].image%>" />
+                                        <input type="hidden" name="benefit-identifier" value="<%=randomId%>" />
+                                        <input type="file" name="benefit-image-<%=randomId%>" id="benefit-image-<%=randomId%>"
+                                            value="2" accept="image/*" hidden
+                                            class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full text-wrap" />
+                                        <label class="text-<%=accentColour%> mr-2 flex gap-5 flex-wrap"
+                                            for="benefit-image-<%=randomId%>">
+                                            <img src="<%=perks[i].image%>" alt="Benefit Photo"
+                                                class="preview mb-2 w-24 object-contain border-<%=accentColour%> rounded-lg border-2 p-2" />
+                                            <p>
+                                                Choose file...
+                                            </p>
+                                        </label>
+
+                                    </div>
+
+
+                                </div>
+                                <% } %>
+                    </list>
+
+
+                    <button type="button"
+                        class="mx-auto scale-200 cursor-pointer text-<%=accentColour%>-darkened font-bold"
+                        onclick="addNewMember()">
+                        <i class="fa-solid fa-circle-plus"></i>
+                    </button>
+
+
+                </form>
+
+            </main>
+
+
+            <%- include('partials/footer')%>
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+
+    function anythingChanged() {
+        let submitButton = document.getElementById("save-button");
+        let cancelButton = document.getElementById("cancel-button");
+        submitButton.classList.remove("hidden");
+        cancelButton.classList.remove("hidden");
+
+    }
+
+    function remove(button) {
+
+        let index = Array.from(button.parentNode.parentNode.parentNode.children).indexOf(button.parentNode.parentNode);
+
+        let members_node = document.getElementById("benefits-list");
+
+        if (members_node.children.length <= 1) {
+            alert("At least one benefit must be present.");
+            return;
+        }
+
+        button.parentNode.parentNode.remove();
+        anythingChanged();
+    }
+
+    function addNewMember() {
+        const list = document.getElementById("benefits-list");
+        const index = list.children.length;
+        let memberCopy = list.children[list.children.length - 1].cloneNode(true);
+
+        //randomize input ids
+
+        const randomId = Math.random().toString(36).substring(2, 15);
+
+        memberCopy.querySelectorAll("input").forEach(input => {
+            if (input.type === "file") {
+                input.id = "benefit-image-" + randomId;
+                input.name = "benefit-image";
+            } else if (input.name === "benefit-name") {
+                input.id = "benefit-name-" + randomId;
+                input.name = "benefit-name";
+            } else if (input.name === "benefit-description") {
+                input.id = "benefit-description-" + randomId;
+                input.name = "benefit-description";
+            } else if (input.name === "benefit-default-image") {
+                input.name = "benefit-default-image";
+                input.value = "";
+            } else if (input.name === "benefit-identifier") {
+                input.name = "benefit-identifier";
+                input.value = randomId;
+            }
+        });
+
+        //also update the label for attribute
+
+        memberCopy.querySelectorAll("label").forEach(label => {
+            if (label.getAttribute("for").startsWith("benefit-image-")) {
+                label.setAttribute("for", "benefit-image-" + randomId);
+            } else if (label.getAttribute("for").startsWith("benefit-name-")) {
+                label.setAttribute("for", "benefit-name-" + randomId);
+            } else if (label.getAttribute("for").startsWith("benefit-description-")) {
+                label.setAttribute("for", "benefit-description-" + randomId);
+            }
+        });
+
+        let input = memberCopy.querySelector("input[type='file']");
+        let preview = input.parentNode.querySelector("img");
+        input.addEventListener("change", refreshImage.bind(input, preview));
+
+
+
+
+
+        list.appendChild(memberCopy);
+        anythingChanged();
+    }
+
+    function refreshImage(preview) {
+        const file = this.files[0];
+        if (!file) return;
+
+        const reader = new FileReader();
+        reader.onload = function (e) {
+            preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+
+    function onInputChanged(input) {
+        anythingChanged();
+    }
+
+    new Sortable(document.getElementById("benefits-list"), {
+        animation: 150,
+        onEnd: function (/**Event*/evt) {
+            anythingChanged();
+        },
+        handle: ".handle"
+    });
+
+    const all_inputs = document.getElementsByTagName("input");
+    const all_textareas = document.getElementsByTagName("textarea");
+
+    for (let j = 0; j < all_inputs.length; j++) {
+        all_inputs[j].addEventListener("change", (event) => onInputChanged(event.target));
+    }
+
+    for (let j = 0; j < all_textareas.length; j++) {
+        all_textareas[j].addEventListener("change", (event) => onInputChanged(event.target));
+    }
+
+    let inputs = document.querySelectorAll("input[type='file']");
+    inputs.forEach(input => {
+        let preview = input.parentNode.querySelector("img");
+        input.addEventListener("change", refreshImage.bind(input, preview));
+    });
+
+</script>
+
+</html>

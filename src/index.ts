@@ -1,52 +1,17 @@
 import express from 'express';
-import path from 'path';
+import path, { dirname } from 'path';
 import { readFileSync, writeFileSync } from 'fs';
 import cookieParser from 'cookie-parser'; 
 import session from 'express-session';
-import bcrypt from 'bcrypt';
-import { get } from 'http';
+import multer from 'multer';
+import fs from 'fs';
+import { getData, STATIC_PATH } from './data';
 
-
+import { router as editorRouter } from './routers/editor.router';
 
 const app = express();
 const PORT = process.env.PORT || 3000;
-
-const DATA_PATH = path.join(__dirname, 'data.json');
-const STATIC_PATH = path.join(__dirname, 'static');
 const VIEWS_PATH = path.join(__dirname, 'views'); 
-
-interface Perk {
-  title: string;
-  description: string;
-  image: string;
-}
-
-interface Volunteer {
-  name: string;
-  role: string;
-  image: string;
-}
-
-interface QuestionAnswer {
-  question: string;
-  answer: string;
-}
-
-interface Data {
-  ticketsLink: string;
-  ticketsAvailable: boolean;
-  eventDate: string;
-  accentColour: string;
-  fullLogo: string;
-  fairy: string;
-  icon: string;
-  logo: string;
-  buyFrame: string;
-  background: string;
-  perks: Perk[];
-  oc: Volunteer[];
-  faq: QuestionAnswer[];
-}
 
 declare module "express-session" {
   interface SessionData {
@@ -62,17 +27,6 @@ function requireAuthMiddleware(req: express.Request, res: express.Response, next
     return res.redirect("/login")
   }
   next();
-}
-
-function getData(): Data {
-  let raw = readFileSync(DATA_PATH, 'utf-8');
-  let data = JSON.parse(raw);
-  return data
-}
-
-function saveData(data: Data) {
-  let raw = JSON.stringify(data);
-  writeFileSync(DATA_PATH, raw);
 }
 
 app.use(express.json());
@@ -104,11 +58,7 @@ app.get('/faq', (_req, res) => {
   res.render('faq', getData());
 });
 
-
-app.get("/login", async (req, res) => {
-  if(req.session?.user?.userId != null){
-    return res.redirect('/user');
-  }
+app.get('/login', (_req, res) => {
   res.render('login', getData());
 });
 
@@ -129,30 +79,23 @@ app.post("/login", async (req, res) => {
 
   req.session.user = { userId: admin_username, name: '' };
   req.session.save();
-  return res.redirect('/user');
+  return res.redirect('/editor');
 });
 
 // Logout
 app.post("/logout", (req, res) => {
   req.session.destroy(err => {
-    if (err) return res.redirect('/user');
+    if (err) return res.redirect('/editor');
     res.clearCookie("sid");
-    res.redirect('/login');
+    return res.redirect('/');
   });
 });
 
-app.get('/user', requireAuthMiddleware, (_req, res) => {
-  res.render('editor', getData());
-});
+app.use('/editor', requireAuthMiddleware, editorRouter);
 
-app.post('/save', requireAuthMiddleware, (req, res) => {
-  let data: Data = getData();
-  let newAccentColour: string = req.body.accentColour;
-  data.accentColour = newAccentColour;
-  saveData(data);
-  res.redirect('/user');
-});
 
 app.listen(+PORT, '0.0.0.0', () => {
   console.log('Server running on http://localhost:' + PORT);
 });
+
+export { app };
