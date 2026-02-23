@@ -1,4 +1,5 @@
 import express from 'express';
+import sharp from 'sharp';
 const router = express.Router();
 
 import {
@@ -6,7 +7,7 @@ import {
   saveData,
   Data,
   QuestionAnswer,
-  STATIC_PATH,
+  UPLOADS_PATH,
   upload,
   Volunteer,
   Perk,
@@ -52,10 +53,22 @@ router.post('/appearance', upload.any(), (req, res) => {
     data.fairy = imgPath;
   }
 
-  if('flowerLogo' in imageDictionary) {
-    deleteFile(path.basename(data.logo));
-    let imgPath = saveFile(imageDictionary['flowerLogo']);
-    data.logo = imgPath;
+if ('flowerLogo' in imageDictionary) {
+  deleteFile(path.basename(data.logo));
+  let imgPath = saveFile(imageDictionary['flowerLogo']);
+  data.logo = imgPath;
+
+
+
+
+  const faviconPath = path.join(UPLOADS_PATH, 'favicon.ico');
+  sharp(UPLOADS_PATH + imgPath)
+    .resize(32, 32)
+    .toFile(faviconPath)
+    .catch(err => console.error('Favicon generation failed:', err));
+
+  data.icon = '/favicon.ico';
+
   }
 
   if('background' in imageDictionary) {
