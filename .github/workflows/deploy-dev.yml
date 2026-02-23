@@ -24,26 +24,18 @@ jobs:
       - name: Install dependencies
         run: npm ci
 
-      # 4. Build Tailwind CSS
-      - name: Build Tailwind CSS
-        run: npm run build:css
+      # 4. Build
+      - name: Build
+        run: npm run build
 
-      # 5. Compile TypeScript
-      - name: Build TypeScript
-        run: npm run build:ts
-
-      # 6. Copy static assets & views
-      - name: Copy static and views
-        run: npm run copy
-
-      # 7. Install SSH key
+      # 5. Install SSH key
       - name: Install SSH Key
         uses: shimataro/ssh-key-action@v2
         with:
           key: ${{ secrets.SSH_PRIVATE_KEY }}
           known_hosts: ${{ secrets.SSH_HOST }}
 
-      # 8. Deploy dist + package files via SCP
+      # 6. Deploy dist + package files via SCP
       - name: Deploy to Dev Server
         uses: appleboy/scp-action@v0.1.5
         with:
@@ -54,7 +46,7 @@ jobs:
           source: "dist,package.json,package-lock.json"
           target: "${{ secrets.DEV_PATH }}/"
 
-      # 9. Install production dependencies on server
+      # 7. Install production dependencies on server
       - name: Install production dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
