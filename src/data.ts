@@ -4,8 +4,11 @@ import path from 'path';
 import fs from 'fs';
 
 const STATIC_PATH = path.join(__dirname, 'static');
-const DATA_PATH = path.join(__dirname, 'data.json');
-const IMAGES_PATH = path.join(STATIC_PATH, 'images');
+const DATA_PATH = process.env.DATA_PATH || path.join(__dirname, '..', 'data');
+const DATA_FILE_PATH = path.join(DATA_PATH, 'data.json');
+const UPLOADS_PATH = path.join(DATA_PATH, 'uploads');
+const SEED_PATH = path.join(__dirname, 'seed');
+const INITIAL_DATA_PATH = path.join(SEED_PATH, 'data.json');
 
 interface Perk {
   title: string;
@@ -41,27 +44,36 @@ interface Data {
 }
 
 function getData(): Data {
-  let raw = readFileSync(DATA_PATH, 'utf-8');
+
+  if(!fs.existsSync(DATA_FILE_PATH)) {
+    if(!fs.existsSync(DATA_PATH)) {
+      fs.mkdirSync(DATA_PATH);
+    }
+    fs.copyFileSync(INITIAL_DATA_PATH, DATA_FILE_PATH);
+  }
+
+  let raw = readFileSync(DATA_FILE_PATH, 'utf-8');
   let data = JSON.parse(raw);
   return data;
 }
-
 function saveData(data: Data) {
   let raw = JSON.stringify(data);
-  writeFileSync(DATA_PATH, raw);
+  writeFileSync(DATA_FILE_PATH, raw);
 }
 
-
 function saveFile(file: Express.Multer.File): string {
-  const filePath = path.join(IMAGES_PATH, file.originalname);
+
+  if(!fs.existsSync(UPLOADS_PATH)) {
+    fs.mkdirSync(UPLOADS_PATH);
+  }
+  const filePath = path.join(UPLOADS_PATH, file.originalname);
   fs.writeFileSync(filePath, file.buffer);
-  return '/images/' + file.originalname;
+  return '/' + file.originalname;
 }
 
 function deleteFile(filename: string) {
-  const filePath = path.join(IMAGES_PATH, filename);
+  const filePath = path.join(UPLOADS_PATH, filename);
   if(filename === '') return;
-
   if (fs.existsSync(filePath)) {
     fs.unlinkSync(filePath);
   }
@@ -83,4 +95,5 @@ export {
   Volunteer,
   upload,
   STATIC_PATH,
+  UPLOADS_PATH
 };

@@ -1,12 +1,9 @@
 import express from 'express';
-import path, { dirname } from 'path';
-import { readFileSync, writeFileSync } from 'fs';
+import path from 'path';
 import cookieParser from 'cookie-parser'; 
 import session from 'express-session';
-import multer from 'multer';
+import { getData, STATIC_PATH, UPLOADS_PATH } from './data';
 import fs from 'fs';
-import { getData, STATIC_PATH } from './data';
-
 import { router as editorRouter } from './routers/editor.router';
 
 const app = express();
@@ -31,6 +28,7 @@ function requireAuthMiddleware(req: express.Request, res: express.Response, next
 
 app.use(express.json());
 app.use(express.static(STATIC_PATH));
+app.use(express.static(UPLOADS_PATH));
 app.use(express.urlencoded({ extended: true }));
 app.use(cookieParser());
 app.use(session({
@@ -62,7 +60,6 @@ app.get('/login', (_req, res) => {
   res.render('login', getData());
 });
 
-// Login
 app.post("/login", async (req, res) => {
 
   const { username, password } = req.body;
@@ -73,7 +70,6 @@ app.post("/login", async (req, res) => {
 
   if (!match_username) return res.status(401).json({ error: "Invalid credentials" });
 
-  //const match_password = await bcrypt.compare(password, admin_password);
   const match_password = admin_password == password;
   if (!match_password) return res.status(401).json({ error: "Invalid credentials" });
 
@@ -82,7 +78,6 @@ app.post("/login", async (req, res) => {
   return res.redirect('/editor');
 });
 
-// Logout
 app.post("/logout", (req, res) => {
   req.session.destroy(err => {
     if (err) return res.redirect('/editor');
@@ -91,8 +86,32 @@ app.post("/logout", (req, res) => {
   });
 });
 
-app.use('/editor', requireAuthMiddleware, editorRouter);
+if(process.env.NODE_ENV === 'development'){
+  console.log('Development environment!')
+  app.get("/output.css", async (req, res) => {
+    try {
+      const postcss = (await import("postcss")).default;
+      const tailwind = (await import("@tailwindcss/postcss")).default;
+      
+      // read your input.css file
+      const inputCssPath = path.resolve(__dirname, "../src/input.css");
+      const inputCss: string = fs.readFileSync(inputCssPath, 'utf-8');
+      
+      // compile with PostCSS + Tailwind
+      const result = await postcss([tailwind()]).process(inputCss, { from: inputCssPath });
+      
+      res.type("text/css").send(result.css);
+    } catch (err) {
+      console.error("Tailwind compile error:", err);
+      res.status(500).send("CSS compilation failed");
+    }
+  });
+}
+else{
+  console.log('Production environment!')
+}
 
+app.use('/editor', requireAuthMiddleware, editorRouter);
 
 app.listen(+PORT, '0.0.0.0', () => {
   console.log('Server running on http://localhost:' + PORT);

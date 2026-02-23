@@ -113,7 +113,7 @@ const files = req.files as Express.Multer.File[];
       let file = imageDictionary[identifier];
       deleteFile(path.basename(image));
       saveFile(file);
-      image = '/images/' + file.originalname;
+      image = file.originalname;
     }
 
     let newPerkEntry: Perk = {
@@ -172,7 +172,7 @@ router.post('/oc', upload.any(), (req, res) => {
       let file = imageDictionary[identifier];
       deleteFile(path.basename(image));
       saveFile(file);
-      image = '/images/' + file.originalname;
+      image = file.originalname;
     }
 
     let newOcEntry: Volunteer = {

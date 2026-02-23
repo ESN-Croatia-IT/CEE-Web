@@ -14,6 +14,10 @@
       "url": "https://github.com/marinprusac"
     },
     {
+      "name": "Lana Malogorski",
+      "url": "https://github.com/takozul17"
+    },
+    {
       "name": "Luka Šulc",
       "email": "lukasulc0@gmail.com",
       "url": "https://lukasulc.pages.dev/"
@@ -25,51 +29,49 @@
     {
       "name": "Elizabeta Pifar",
       "url": "https://github.com/elizabeta2"
-    },
-    {
-      "name": "Lana Malogorski",
-      "url": "https://github.com/takozul17"
     }
   ],
   "type": "commonjs",
   "main": "index.js",
   "scripts": {
-    "dev:css": "tailwindcss -i src/input.css -o src/static/output.css --watch",
-    "dev:ts": "tsx watch src/index.ts",
-    "dev": "npm-run-all --parallel dev:*",
+    "dev": "node --env-file=.env.dev --watch --import tsx src/index.ts",
     "copy:static": "cpy 'src/static/**/*' 'dist/static/'",
     "copy:views": "cpy 'src/views/**/*' 'dist/views/'",
-    "copy:data": "cpy 'src/data.json' 'dist/' --flat",
-    "copy": "npm-run-all copy:*",
+    "copy:seed": "cpy 'src/seed/**/*' 'dist/seed/'",
+    "copy": "npm-run-all copy:static copy:views copy:seed",
     "build:css": "npx @tailwindcss/cli -i ./src/input.css -o ./dist/static/output.css --minify",
     "build:ts": "tsc",
-    "build": "npm-run-all build:* copy",
+    "build": "npm-run-all build:css build:ts copy",
     "start": "node --env-file '.env' dist/index.js",
     "release": "npm-run-all build start"
   },
   "devDependencies": {
     "@tailwindcss/cli": "^4.1.17",
+    "@types/bcrypt": "^6.0.0",
     "@types/cookie-parser": "^1.4.10",
     "@types/ejs": "^3.1.5",
     "@types/express": "^5.0.5",
     "@types/express-session": "^1.18.2",
+    "@types/multer": "^2.0.0",
     "@types/node": "^24.10.1",
+    "@types/tailwindcss": "^3.0.11",
     "cpy-cli": "^6.0.0",
+    "dotenv": "^17.3.1",
     "nodemon": "^3.1.11",
-    "npm-run-all": "^4.1.5",
+    "npm-run-all": "^1.1.3",
     "prettier-plugin-tailwindcss": "^0.6.11",
     "tailwindcss": "^4.1.15",
     "tsx": "^4.21.0",
     "typescript": "^5.9.3"
   },
   "dependencies": {
-    "@types/bcrypt": "^6.0.0",
-    "@types/multer": "^2.0.0",
     "bcrypt": "^6.0.0",
     "cookie-parser": "^1.4.7",
     "ejs": "^3.1.10",
     "express": "^5.2.0",
     "express-session": "^1.18.2",
-    "multer": "^2.0.2"
+    "multer": "^2.0.2",
+    "@tailwindcss/postcss": "^4.2.1",
+    "postcss": "^8.5.6"
   }
 }
