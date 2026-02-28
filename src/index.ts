@@ -60,6 +60,10 @@ app.get('/login', (_req, res) => {
   res.render('login', getData());
 });
 
+app.get('/past_editions', (_req, res) => {
+  res.render('past_editions', getData());
+});
+
 app.post("/login", async (req, res) => {
 
   const { username, password } = req.body;
