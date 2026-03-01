@@ -2,7 +2,7 @@
 
 ## Project Description
 
-CEE-Web is a web application for managing and presenting information for the Croatian Erasmus Event (CEE) organized by ESN Croatia IT Team. It provides tools for editors, event details, FAQs, highlights, and more, supporting both public and admin/editor views.
+CEE-Web is a web application (made by ESN Croatia IT Team) for managing and presenting information for the Croatian Erasmus Event (CEE) organized by ESN Croatia. It provides tools for editors, event details, FAQs, highlights, and more, supporting both public and admin/editor views.
 
 ## CI / CD
 
@@ -47,6 +47,8 @@ JSDoc is supported in this project.
     return a + b;
   }
   ```
+- Install typescript globally: npm install -g typescript
+- Run tsc --noEmit to check for JSDoc type errors.
 
 ## Usage Guide
 
