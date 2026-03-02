@@ -86,9 +86,7 @@ router.get('/details', (_req, res) => {
 });
 
 router.post('/details', (req, res) => {
-  let data: Data = getData();
-  console.log(req.body);
-  
+  let data: Data = getData();  
   let newEventDate: string = req.body.eventDate;
   let newTicketsLink: string = req.body.ticketsLink;
   let newTicketsAvailable: boolean = req.body.ticketsAvailable === 'true';
@@ -116,6 +114,14 @@ const files = req.files as Express.Multer.File[];
 
   let data: Data = getData();
   data.perks = [];
+
+  //benefits-description could be a string if only one perk is present, so we need to check for that and convert it to an array if necessary
+  if (typeof req.body['benefit-description'] === 'string') {
+    req.body['benefit-description'] = [req.body['benefit-description']];
+    req.body['benefit-name'] = [req.body['benefit-name']];
+    req.body['benefit-default-image'] = [req.body['benefit-default-image']];
+    req.body['benefit-identifier'] = [req.body['benefit-identifier']];
+  }
 
   let count = req.body['benefit-description'].length || 0;
 
@@ -148,6 +154,15 @@ router.get('/faq', (_req, res) => {
 router.post('/faq', (req, res) => {
   let data: Data = getData();
   data.faq = [];
+
+
+
+  //faq-question could be a string if only one question is present, so we need to check for that and convert it to an array if necessary
+  if (typeof req.body['faq-question'] === 'string') {
+    req.body['faq-question'] = [req.body['faq-question']];
+    req.body['faq-answer'] = [req.body['faq-answer']];
+  }
+
   for (let i = 0; i < req.body['faq-question'].length; i++) {
     let newFaqEntry: QuestionAnswer = {
       question: req.body['faq-question'][i],
@@ -175,6 +190,14 @@ router.post('/oc', upload.any(), (req, res) => {
 
   let data: Data = getData();
   data.oc = [];
+
+  //oc-name could be a string if only one OC is present, so we need to check for that and convert it to an array if necessary
+  if (typeof req.body['oc-name'] === 'string') {
+    req.body['oc-name'] = [req.body['oc-name']];
+    req.body['oc-role'] = [req.body['oc-role']];
+    req.body['oc-default-image'] = [req.body['oc-default-image']];
+    req.body['oc-identifier'] = [req.body['oc-identifier']];
+  }
 
   let count = req.body['oc-role'].length || 0;
 

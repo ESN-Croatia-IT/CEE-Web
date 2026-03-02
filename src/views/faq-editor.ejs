@@ -32,11 +32,11 @@
                         <h2 class="text-<%=accentColour%> text-2xl font-bold mb-4 mt-6 inline">FAQ Entries</h2>
 
                         <div>
-                            <button type="submit"
+                            <button type="submit" id="save-button"
                                 class="hidden w-24 mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-<%=accentColour%> text-white cursor-pointer">
                                 Save
                             </button>
-                            <button type="button" onclick="location.reload()"
+                            <button type="button" id="cancel-button" onclick="location.reload()"
                                 class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
                                 Cancel
                             </button>
@@ -106,11 +106,10 @@
 <script>
 
     function anythingChanged() {
-        let submitButton = document.querySelector("button[type='submit']");
-        let cancelButton = document.querySelector("button[type='button']");
+        let submitButton = document.getElementById("save-button");
+        let cancelButton = document.getElementById("cancel-button");
         submitButton.classList.remove("hidden");
         cancelButton.classList.remove("hidden");
-
     }
 
     function remove(button) {
