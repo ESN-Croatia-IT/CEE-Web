@@ -50,4 +50,4 @@ jobs:
       - name: Install production dependencies on server
         run: |
           ssh -o StrictHostKeyChecking=no ${{ secrets.SSH_USER }}@${{ secrets.SSH_HOST }} \
-          "source ${{ secrets.PRODUCTION_VENV_PATH }} && cd ${{ secrets.PRODUCTION_PATH }} && npm ci --production && touch dist/index.js"
+          "source ${{ secrets.PRODUCTION_VENV_PATH }} && cd ${{ secrets.PRODUCTION_PATH }} && npm install --omit=dev && npm rebuild sqlite3 --build-from-source && touch dist/index.js"
