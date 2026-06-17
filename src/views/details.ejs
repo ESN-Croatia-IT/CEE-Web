@@ -1,0 +1,141 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Admin panel for the Croatian Erasmus Event. Edit event details, perks, FAQs, and organising committee information." />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <title>CEE Editor — Details</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="<%=icon ?? '/favicon.ico'%>" sizes="32x32" />
+</head>
+
+<body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
+
+    <%- include('partials/editor-navigation')%>
+
+    <main class="grow">
+        <h1 class="text-gray-600 mt-8 mb-12 text-center text-3xl font-bold sm:text-4xl">
+            CEE Web Editor <i class="fa-solid fa-pencil"></i>
+        </h1>
+
+        <form action="details" method="post"
+            class="w-11/12 max-w-3xl mx-auto mb-6 flex flex-col space-y-4 rounded-lg p-6">
+
+            <% if (error === 'tag_taken') { %>
+                <p class="text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2">
+                    That tag is already in use by another event. Choose a unique tag.
+                </p>
+            <% } else if (error === 'tag_required') { %>
+                <p class="text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2">
+                    A tag is required.
+                </p>
+            <% } %>
+
+            <div class="flex justify-between">
+                <h2 class="text-gray-600 text-2xl font-bold mb-4 mt-6 inline">Event Details</h2>
+                <div>
+                    <button type="submit" id="save-button"
+                        class="hidden w-24 mt-4 rounded hover:bg-gray-700 px-4 py-2 font-bold hover:text-white bg-gray-600 text-white cursor-pointer">
+                        Save
+                    </button>
+                    <button type="button" id="cancel-button" onclick="location.reload()"
+                        class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+                <label class="font-bold text-gray-600 mb-2 block" for="tag">Event Tag <span class="text-red-500">*</span><span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">A unique short name for this event. Shown in the admin events list.</span></span></label>
+                <input type="text" name="tag" id="tag" value="<%=tag%>" required
+                    class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+            </div>
+
+            <div class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+                <fieldset>
+                    <legend class="font-bold text-gray-600 mb-3">Event State<span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">Controls event visibility. Draft and Archived hide the event from the public.</span></span></legend>
+                    <div class="flex flex-col space-y-3">
+                        <% [
+                            { value: 'draft',     label: 'Draft',     desc: 'Not visible to the public' },
+                            { value: 'published', label: 'Published', desc: 'Visible, tickets not yet available' },
+                            { value: 'selling',   label: 'Selling',   desc: 'Tickets available for purchase' },
+                            { value: 'sold_out',  label: 'Sold Out',  desc: 'Visible, no tickets available' },
+                            { value: 'ended',     label: 'Ended',     desc: 'Event passed, still visible' },
+                            { value: 'archived',  label: 'Archived',  desc: 'Hidden from the public' },
+                        ].forEach(opt => { %>
+                            <label class="cursor-pointer flex items-center gap-3">
+                                <input type="radio" name="state" value="<%=opt.value%>" <%=state===opt.value ? 'checked' : ''%> />
+                                <span class="text-gray-700 font-medium"><%=opt.label%></span>
+                                <span class="text-gray-400 text-sm">— <%=opt.desc%></span>
+                            </label>
+                        <% }) %>
+                    </div>
+                </fieldset>
+            </div>
+
+            <div class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+                <label class="font-bold text-gray-600 mb-2 block" for="eventDescription">
+                    Event Description <span class="text-gray-400 font-normal text-sm">— optional</span><span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">A short subtitle displayed below the event name on the homepage and event page.</span></span>
+                </label>
+                <input type="text" name="eventDescription" id="eventDescription" value="<%=eventDescription%>"
+                    class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+            </div>
+
+            <div class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+                <label class="font-bold text-gray-600 mb-2" for="eventDate">Event Date <span class="text-red-500">*</span><span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The date of the event. Used for the countdown timer on the event page.</span></span></label>
+                <input type="date" name="eventDate" id="eventDate" value="<%=eventDate%>"
+                    class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+            </div>
+
+            <div id="ticket-date-section" class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+                <label class="font-bold text-gray-600 mb-2" for="ticketSaleEndDate">Ticket Sale End Date<span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">When ticket sales close. Displayed as a countdown on the event page.</span></span></label>
+                <input type="date" name="ticketSaleEndDate" id="ticketSaleEndDate" value="<%=ticketSaleEndDate%>"
+                    class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+            </div>
+
+            <div id="ticket-link-section" class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+                <label class="font-bold text-gray-600 mb-2" for="ticketsLink">Tickets Link<span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">URL where attendees can purchase tickets (e.g. a Google Form or ticketing platform).</span></span></label>
+                <input type="url" name="ticketsLink" id="ticketsLink" value="<%=ticketsLink%>"
+                    class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+            </div>
+
+        </form>
+    </main>
+
+    <footer class="bg-gray-700 py-3 text-center text-xs text-white">
+        ESN Croatia, Selska 112c, 10000 Zagreb, Croatia
+    </footer>
+
+</body>
+
+<script>
+    function anythingChanged() {
+        document.getElementById("save-button").classList.remove("hidden");
+        document.getElementById("cancel-button").classList.remove("hidden");
+    }
+
+    function updateTicketFields() {
+        const selling = document.querySelector('input[name="state"][value="selling"]').checked;
+        ['ticket-date-section', 'ticket-link-section'].forEach(id => {
+            const section = document.getElementById(id);
+            section.classList.toggle('opacity-50', !selling);
+            section.classList.toggle('pointer-events-none', !selling);
+        });
+    }
+
+    const all_inputs = document.getElementsByTagName("input");
+    for (let j = 0; j < all_inputs.length; j++) {
+        all_inputs[j].addEventListener("change", anythingChanged);
+    }
+
+    document.querySelectorAll('input[name="state"]').forEach(radio => {
+        radio.addEventListener('change', updateTicketFields);
+    });
+
+    updateTicketFields();
+</script>
+
+</html>

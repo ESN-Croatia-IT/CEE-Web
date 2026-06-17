@@ -1,0 +1,179 @@
+<!doctype html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description"
+        content="Admin panel for the Croatian Erasmus Event. Edit event details, perks, FAQs, and organising committee information." />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <title>CEE Editor — Benefits</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="<%=icon ?? '/favicon.ico'%>" sizes="32x32" />
+</head>
+
+<body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
+
+    <%- include('partials/editor-navigation')%>
+
+    <main class="grow">
+        <h1 class="text-gray-600 mt-8 mb-12 text-center text-3xl font-bold sm:text-4xl">
+            CEE Web Editor <i class="fa-solid fa-pencil"></i>
+        </h1>
+
+        <form action="benefits" method="post"
+            class="w-11/12 max-w-3xl mx-auto mb-6 flex flex-col space-y-4 rounded-lg p-6"
+            enctype="multipart/form-data">
+
+            <div class="flex justify-between">
+                <h2 class="text-gray-600 text-2xl font-bold mb-4 mt-6 inline">Benefits</h2>
+                <div>
+                    <button type="submit" id="save-button"
+                        class="hidden w-24 mt-4 rounded hover:bg-gray-700 px-4 py-2 font-bold hover:text-white bg-gray-600 text-white cursor-pointer">
+                        Save
+                    </button>
+                    <button type="button" id="cancel-button" onclick="location.reload()"
+                        class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
+                        Cancel
+                    </button>
+                </div>
+            </div>
+
+            <div id="benefits-list">
+                <% for(let i=0; i < perks.length; i++) { %>
+                    <% let randomId=Math.random().toString(36).substring(2, 15); %>
+                    <div class="p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4">
+
+                        <div class="text-xl">
+                            <span class="handle text-gray-700 cursor-move p-2">
+                                <i class="fa-solid fa-grip-vertical"></i>
+                            </span>
+                            <button type="button" class="cursor-pointer text-gray-700 p-2" onclick="remove(this)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                        </div>
+
+                        <div>
+                            <label class="font-bold text-gray-600 mb-2 mr-2" for="benefit-name-<%=randomId%>">Benefit: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The title of this benefit or perk, shown as a heading on the event page.</span></span></label>
+                            <input class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                                type="text" name="benefit-name" id="benefit-name-<%=randomId%>"
+                                value="<%=perks[i].title%>" required />
+                        </div>
+
+                        <div>
+                            <label class="font-bold text-gray-600 mb-2 mr-2" for="benefit-description-<%=randomId%>">Description: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">A description of this benefit, shown below the title on the event page.</span></span></label>
+                            <textarea class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                                rows=4 name="benefit-description" id="benefit-description-<%=randomId%>"
+                                required><%=perks[i].description%></textarea>
+                        </div>
+
+                        <div>
+                            <h3 class="font-bold text-gray-600 mb-2">Photo:<span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">An image representing this benefit.</span></span></h3>
+                            <input type="hidden" name="benefit-default-image" value="<%=perks[i].image%>" />
+                            <input type="hidden" name="benefit-identifier" value="<%=randomId%>" />
+                            <input type="file" name="benefit-image-<%=randomId%>" id="benefit-image-<%=randomId%>"
+                                accept="image/*" hidden />
+                            <label class="text-gray-600 mr-2 flex gap-5 flex-wrap" for="benefit-image-<%=randomId%>">
+                                <img src="<%=perks[i].image%>" alt="Benefit Photo"
+                                    class="preview mb-2 w-24 object-contain border-gray-400 rounded-lg border-2 p-2" />
+                                <p>Choose file...</p>
+                            </label>
+                        </div>
+
+                    </div>
+                <% } %>
+            </div>
+
+            <button type="button"
+                class="mx-auto scale-200 cursor-pointer text-gray-700 font-bold"
+                onclick="addNewMember()">
+                <i class="fa-solid fa-circle-plus"></i>
+            </button>
+
+        </form>
+    </main>
+
+    <footer class="bg-gray-700 py-3 text-center text-xs text-white">
+        ESN Croatia, Selska 112c, 10000 Zagreb, Croatia
+    </footer>
+
+</body>
+
+<script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
+<script>
+    function anythingChanged() {
+        document.getElementById("save-button").classList.remove("hidden");
+        document.getElementById("cancel-button").classList.remove("hidden");
+    }
+
+    function remove(button) {
+        button.parentNode.parentNode.remove();
+        anythingChanged();
+    }
+
+    function refreshImage(preview) {
+        const file = this.files[0];
+        if (!file) return;
+        const reader = new FileReader();
+        reader.onload = function (e) { preview.src = e.target.result; };
+        reader.readAsDataURL(file);
+    }
+
+    function createBenefitEntry(randomId) {
+        const div = document.createElement('div');
+        div.className = 'p-4 rounded-lg border-gray-400 border-dashed border-2 mb-4';
+        div.innerHTML = `
+            <div class="text-xl">
+                <span class="handle text-gray-700 cursor-move p-2"><i class="fa-solid fa-grip-vertical"></i></span>
+                <button type="button" class="cursor-pointer text-gray-700 p-2" onclick="remove(this)"><i class="fa-solid fa-trash"></i></button>
+            </div>
+            <div>
+                <label class="font-bold text-gray-600 mb-2 mr-2" for="benefit-name-${randomId}">Benefit: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The title of this benefit or perk, shown as a heading on the event page.</span></span></label>
+                <input class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                    type="text" name="benefit-name" id="benefit-name-${randomId}" value="" required />
+            </div>
+            <div>
+                <label class="font-bold text-gray-600 mb-2 mr-2" for="benefit-description-${randomId}">Description: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">A description of this benefit, shown below the title on the event page.</span></span></label>
+                <textarea class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                    rows="4" name="benefit-description" id="benefit-description-${randomId}" required></textarea>
+            </div>
+            <div>
+                <h3 class="font-bold text-gray-600 mb-2">Photo:<span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">An image representing this benefit.</span></span></h3>
+                <input type="hidden" name="benefit-default-image" value="" />
+                <input type="hidden" name="benefit-identifier" value="${randomId}" />
+                <input type="file" name="benefit-image-${randomId}" id="benefit-image-${randomId}" accept="image/*" hidden />
+                <label class="text-gray-600 mr-2 flex gap-5 flex-wrap" for="benefit-image-${randomId}">
+                    <img src="" alt="Benefit Photo" class="preview mb-2 w-24 object-contain border-gray-400 rounded-lg border-2 p-2" />
+                    <p>Choose file...</p>
+                </label>
+            </div>`;
+        const fileInput = div.querySelector("input[type='file']");
+        const preview = div.querySelector("img.preview");
+        fileInput.addEventListener("change", refreshImage.bind(fileInput, preview));
+        return div;
+    }
+
+    function addNewMember() {
+        const list = document.getElementById("benefits-list");
+        const randomId = Math.random().toString(36).substring(2, 15);
+        list.appendChild(createBenefitEntry(randomId));
+        anythingChanged();
+    }
+
+    function onInputChanged() { anythingChanged(); }
+
+    new Sortable(document.getElementById("benefits-list"), {
+        animation: 150,
+        onEnd: () => anythingChanged(),
+        handle: ".handle"
+    });
+
+    document.querySelectorAll("input, textarea").forEach(el => el.addEventListener("change", onInputChanged));
+
+    document.querySelectorAll("input[type='file']").forEach(input => {
+        const preview = input.parentNode.querySelector("img");
+        input.addEventListener("change", refreshImage.bind(input, preview));
+    });
+</script>
+
+</html>

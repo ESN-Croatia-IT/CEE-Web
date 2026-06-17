@@ -1,6 +1,7 @@
+<% if (typeof process !== 'undefined' && process.env.USERBACK_TOKEN) { %>
 <script>
   window.Userback = window.Userback || { access_token: null };
-  Userback.access_token = 'A-UbjQXHKPuEXoucjF0XJLylMHk';
+  Userback.access_token = '<%=process.env.USERBACK_TOKEN%>';
   (function (d) {
     var s = d.createElement('script');
     s.async = true;
@@ -8,3 +9,4 @@
     (d.head || d.body).appendChild(s);
   })(document);
 </script>
+<% } %>

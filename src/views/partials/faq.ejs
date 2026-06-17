@@ -1,0 +1,66 @@
+<section class="mt-32">
+    <div class="container mx-auto flex flex-col justify-center px-4 md:px-8">
+        <h1
+        class="text-<%=accentColour%> text-center text-2xl font-bold">
+        Frequently Asked Questions
+        </h1>
+        <div
+        class="mx-[4%] flex w-11/12 flex-col sm:px-8 md:mx-[12.5%] md:w-9/12 lg:px-12 xl:px-32">
+        <% for (let i = 0; i < faq.length; i++) { %>
+        <details class="group mb-4">
+            <summary
+            class="border-<%=accentColour%> bg-<%=accentColour%>-lightened text-<%=accentColour%> hover:bg-<%=accentColour%>-darkened mt-2 cursor-pointer rounded-lg border-l-4 px-4 py-2 text-xl font-bold transition-all">
+            <%= faq[i].question %>
+            </summary>
+            <div
+            class="faq-content max-h-0 overflow-hidden transition-all duration-500 ease-in-out">
+            <p
+                class="border-<%=accentColour%> text-<%=accentColour%> mt-2 rounded-lg border-l-4 bg-white px-4 py-2">
+                <%= faq[i].answer %>
+            </p>
+            </div>
+        </details>
+        <% } %>
+        </div>
+    </div>
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            const faqs = document.querySelectorAll('details');
+            faqs.forEach(el => {
+            const content = el.querySelector('.faq-content');
+            if (!el.open) {
+                content.style.maxHeight = '0';
+            } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+            }
+            el.addEventListener('toggle', () => {
+                if (el.open) {
+                // Opening
+                content.style.maxHeight = content.scrollHeight + 'px';
+                const onOpenTransitionEnd = () => {
+                    content.style.maxHeight = 'none'; // allow natural height after animation
+                    content.removeEventListener(
+                    'transitionend',
+                    onOpenTransitionEnd
+                    );
+                };
+                content.addEventListener('transitionend', onOpenTransitionEnd);
+                } else {
+                content.style.maxHeight = content.scrollHeight + 'px';
+                requestAnimationFrame(() => {
+                    content.style.maxHeight = '0';
+                    const onCloseTransitionEnd = () => {
+                    content.style.maxHeight = '0'; // Ensure it stays collapsed
+                    content.removeEventListener(
+                        'transitionend',
+                        onCloseTransitionEnd
+                    );
+                    };
+                    content.addEventListener('transitionend', onCloseTransitionEnd);
+                });
+                }
+            });
+            });
+        });
+    </script>
+</section>

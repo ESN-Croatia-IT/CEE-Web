@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <meta name="description" content="Join the Croatian Erasmus Event (CEE) - A celebration of international student culture. Buy tickets and learn about our exciting event." />
+    <title>Croatian Erasmus Event</title>
+    <link
+      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
+      rel="stylesheet" />
+    <link href="/output.css" rel="stylesheet" />
+    <link
+      id="favicon"
+      rel="icon"
+      type="image/x-icon"
+      href="<%=icon ?? '/favicon.ico'%>"
+      sizes="32x32" />
+  </head>
+  <body
+    class="relative font-['Montserrat',sans-serif] bg-gray-100">
+    <div class="fixed inset-0 -top-[10%] -left-[10%] -z-10 h-[120%] w-[120%] bg-cover bg-center bg-no-repeat brightness-110"></div>
+
+    <main class="bg-white w-11/12 md:w-5/6 mx-auto rounded-xl shadow-lg p-4 my-4 md:my-20">
+
+
+      <section>
+        <img
+        src="<%=fullLogo%>"
+        alt="Croatian Erasmus Event full logo"
+        class="mt-4 md:mt-8 sm:ml-[25%] sm:w-1/2" />
+      </section>
+
+      <section class="relative mb-32">
+        <div
+          class="absolute top-0 bottom-0 left-1/2
+                w-[95vw] -translate-x-1/2
+                bg-gray-500 rounded-xl
+                -skew-y-3
+                z-8">
+        </div>
+        <div class="relative z-10 py-8 mt-16 -skew-y-3 flex flex-col items-center space-y-6">
+          <h1 class="text-white text-center text-3xl font-bold sm:text-4xl md:text-5xl">
+            No events currently available
+          </h1>
+          <section>
+            <p class="text-center text-2xl text-white"> Stay tuned for updates!</p>
+          </section>
+        </div>
+      </section>
+
+
+
+
+    </main>
+
+    <%- include('partials/userback')%>
+    
+    <%- include('partials/footer')%>
+    
+  </body>
+</html>
