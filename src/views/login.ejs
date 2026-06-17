@@ -4,7 +4,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <meta name="description" content="Admin login for the Croatian Erasmus Event website. Manage event content and settings securely." />
-    <link href="./output.css" rel="stylesheet" />
+    <link href="/output.css" rel="stylesheet" />
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet" />
@@ -13,23 +13,22 @@
       id="favicon"
       rel="icon"
       type="image/x-icon"
-      href="/favicon.ico"
+      href="<%=icon ?? '/favicon.ico'%>"
       sizes="32x32" />
   </head>
   <body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
-    <div id="header-bg"></div>
 
-    <%- include('partials/dropdownlist')%>
-    <%- include('partials/header')%>
-    
     <main class="grow">
         <h1
-            class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
+            class="text-<%=accentColour%> mt-8 mb-12 text-center text-3xl font-bold sm:text-4xl">
             Login
         </h1>
 
-
-
+        <% if (typeof query !== 'undefined' && query.error === 'invalid_credentials') { %>
+            <p class="w-11/12 max-w-sm mx-auto text-sm text-red-600 bg-red-50 border border-red-200 rounded-lg px-4 py-2">
+                Invalid username or password.
+            </p>
+        <% } %>
         <form action="/login" method="post" class="w-11/12 max-w-sm mx-auto flex flex-col space-y-4 border-<%=accentColour%> rounded-lg border-2 p-6 shadow-lg">
             <label for="username"> Username </label>
             <input
@@ -37,9 +36,6 @@
                 id="username"
                 name="username"
                 required
-                minlength="4"
-                maxlength="8"
-                size="10"
                 autocomplete="username"
                 autofocus
                 />
@@ -50,9 +46,6 @@
                 id="password"
                 name="password"
                 required
-                minlength="4"
-                maxlength="8"
-                size="10"
                 autocomplete="current-password"
                 />
             <button
@@ -62,11 +55,7 @@
                 Login
             </button>
         </form>
-
-
-
     </main>
-
 
     <%- include('partials/footer')%>
   </body>

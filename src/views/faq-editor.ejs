@@ -8,183 +8,126 @@
         content="Admin panel for the Croatian Erasmus Event. Edit event details, perks, FAQs, and organising committee information." />
     <link href="/output.css" rel="stylesheet" />
     <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
-    <title>Login</title>
-    <link id="favicon" rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+    <title>CEE Editor — FAQ</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="<%=icon ?? '/favicon.ico'%>" sizes="32x32" />
 </head>
 
 <body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
 
-
-
     <%- include('partials/editor-navigation')%>
-        <%- include('partials/header')%>
 
-            <main class="grow">
-                <h1 class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
-                    CEE Web Editor <i class="fa-solid fa-pencil"></i>
-                </h1>
+    <main class="grow">
+        <h1 class="text-gray-600 mt-8 mb-12 text-center text-3xl font-bold sm:text-4xl">
+            CEE Web Editor <i class="fa-solid fa-pencil"></i>
+        </h1>
 
-                <form action="/editor/faq" method="post"
-                    class="w-11/12 max-w-3xl mx-auto mb-6 flex flex-col space-y-4 rounded-lg p-6">
+        <form action="faq" method="post"
+            class="w-11/12 max-w-3xl mx-auto mb-6 flex flex-col space-y-4 rounded-lg p-6">
 
-                    <div class="flex justify-between">
-
-                        <h2 class="text-<%=accentColour%> text-2xl font-bold mb-4 mt-6 inline">FAQ Entries</h2>
-
-                        <div>
-                            <button type="submit" id="save-button"
-                                class="hidden w-24 mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-<%=accentColour%> text-white cursor-pointer">
-                                Save
-                            </button>
-                            <button type="button" id="cancel-button" onclick="location.reload()"
-                                class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
-                                Cancel
-                            </button>
-                        </div>
-
-                    </div>
-
-
-                    <div id="faq-entries">
-
-                        <% for(let i=0; i < faq.length; i++) { %>
-
-                            <% let randomId=Math.random().toString(36).substring(2, 15); %>
-
-                                <div class="p-4 rounded-lg border-<%=accentColour%> mb-4 border-2 border-dashed">
-
-                                    <div class="text-xl">
-                                        <span class="handle text-<%=accentColour%>-darkened cursor-move p-2">
-                                            <i class="fa-solid fa-grip-vertical"></i>
-                                        </span>
-
-                                        <button type="button" class="cursor-pointer text-<%=accentColour%>-darkened p-2"
-                                            onclick="remove(this)">
-                                            <i class="fa-solid fa-trash"></i>
-                                        </button>
-
-                                        <div class="flex flex-row">
-                                            <label class="font-bold text-<%=accentColour%> mb-2 mr-2"
-                                                for="faq-question-<%=randomId%>">Q:</label>
-                                            <input
-                                                class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full"
-                                                type="text" id="faq-question-<%=randomId%>" name="faq-question"
-                                                value="<%=faq[i].question%>" required />
-                                        </div>
-                                        <div class="flex flex-row">
-                                            <label class="font-bold text-<%=accentColour%> mb-2 mr-2"
-                                                for="faq-answer-<%=randomId%>">A:</label>
-                                            <textarea
-                                                class="border-<%=accentColour%> rounded-lg border-dashed border p-2 mb-2 w-full"
-                                                id="faq-answer-<%=randomId%>" name="faq-answer" rows="4"
-                                                required><%=faq[i].answer%></textarea>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <% } %>
-                    </div>
-
-                    <button type="button"
-                        class="mx-auto scale-200 cursor-pointer text-<%=accentColour%>-darkened font-bold"
-                        onclick="addNewMember()">
-                        <i class="fa-solid fa-circle-plus"></i>
+            <div class="flex justify-between">
+                <h2 class="text-gray-600 text-2xl font-bold mb-4 mt-6 inline">FAQ Entries</h2>
+                <div>
+                    <button type="submit" id="save-button"
+                        class="hidden w-24 mt-4 rounded hover:bg-gray-700 px-4 py-2 font-bold hover:text-white bg-gray-600 text-white cursor-pointer">
+                        Save
                     </button>
+                    <button type="button" id="cancel-button" onclick="location.reload()"
+                        class="hidden w-24 mt-4 rounded hover:bg-gray-500 px-4 py-2 font-bold hover:text-white bg-gray-400 text-white cursor-pointer">
+                        Cancel
+                    </button>
+                </div>
+            </div>
 
+            <div id="faq-entries">
+                <% for(let i=0; i < faq.length; i++) { %>
+                    <% let randomId=Math.random().toString(36).substring(2, 15); %>
+                    <div class="p-4 rounded-lg border-gray-400 mb-4 border-2 border-dashed">
+                        <div class="text-xl">
+                            <span class="handle text-gray-700 cursor-move p-2">
+                                <i class="fa-solid fa-grip-vertical"></i>
+                            </span>
+                            <button type="button" class="cursor-pointer text-gray-700 p-2" onclick="remove(this)">
+                                <i class="fa-solid fa-trash"></i>
+                            </button>
+                            <div class="flex flex-row">
+                                <label class="font-bold text-gray-600 mb-2 mr-2" for="faq-question-<%=randomId%>">Q: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The question as it appears in the FAQ section on the event page.</span></span></label>
+                                <input class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                                    type="text" id="faq-question-<%=randomId%>" name="faq-question"
+                                    value="<%=faq[i].question%>" required />
+                            </div>
+                            <div class="flex flex-row">
+                                <label class="font-bold text-gray-600 mb-2 mr-2" for="faq-answer-<%=randomId%>">A: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The answer to the question. Supports multiple lines of text.</span></span></label>
+                                <textarea class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                                    id="faq-answer-<%=randomId%>" name="faq-answer" rows="4"
+                                    required><%=faq[i].answer%></textarea>
+                            </div>
+                        </div>
+                    </div>
+                <% } %>
+            </div>
 
-                </form>
+            <button type="button"
+                class="mx-auto scale-200 cursor-pointer text-gray-700 font-bold"
+                onclick="addNewMember()">
+                <i class="fa-solid fa-circle-plus"></i>
+            </button>
 
-            </main>
+        </form>
+    </main>
 
+    <footer class="bg-gray-700 py-3 text-center text-xs text-white">
+        ESN Croatia, Selska 112c, 10000 Zagreb, Croatia
+    </footer>
 
-            <%- include('partials/footer')%>
 </body>
-
-
 
 <script src="https://cdn.jsdelivr.net/npm/sortablejs@latest/Sortable.min.js"></script>
 <script>
-
     function anythingChanged() {
-        let submitButton = document.getElementById("save-button");
-        let cancelButton = document.getElementById("cancel-button");
-        submitButton.classList.remove("hidden");
-        cancelButton.classList.remove("hidden");
+        document.getElementById("save-button").classList.remove("hidden");
+        document.getElementById("cancel-button").classList.remove("hidden");
     }
 
     function remove(button) {
-
-        let index = Array.from(button.parentNode.parentNode.parentNode.children).indexOf(button.parentNode.parentNode);
-
-        let members_node = document.getElementById("faq-entries");
-
-        if (members_node.children.length <= 1) {
-            alert("At least one FAQ entry must be present.");
-            return;
-        }
-
         button.parentNode.parentNode.remove();
         anythingChanged();
     }
 
-    function addNewMember() {
-        const list = document.getElementById("faq-entries");
-        const index = list.children.length;
-        let memberCopy = list.children[list.children.length - 1].cloneNode(true);
-
-        //randomize input ids
-
-        const randomId = Math.random().toString(36).substring(2, 15);
-
-        memberCopy.querySelectorAll("input").forEach(input => {
-            if (input.name === "faq-question") {
-                input.id = "faq-question-" + randomId;
-                input.name = "faq-question";
-
-            } else if (input.name === "faq-answer") {
-                input.id = "faq-answer-" + randomId;
-                input.name = "faq-answer";
-            }
-        });
-
-        //also update the label for attribute
-
-        memberCopy.querySelectorAll("label").forEach(label => {
-            if (label.getAttribute("for").startsWith("faq-question-")) {
-                label.setAttribute("for", "faq-question-" + randomId);
-            } else if (label.getAttribute("for").startsWith("faq-answer-")) {
-                label.setAttribute("for", "faq-answer-" + randomId);
-            }
-        });
-
-        list.appendChild(memberCopy);
-        anythingChanged();
+    function createFaqEntry(randomId) {
+        const div = document.createElement('div');
+        div.className = 'p-4 rounded-lg border-gray-400 mb-4 border-2 border-dashed';
+        div.innerHTML = `
+            <div class="text-xl">
+                <span class="handle text-gray-700 cursor-move p-2"><i class="fa-solid fa-grip-vertical"></i></span>
+                <button type="button" class="cursor-pointer text-gray-700 p-2" onclick="remove(this)"><i class="fa-solid fa-trash"></i></button>
+                <div class="flex flex-row">
+                    <label class="font-bold text-gray-600 mb-2 mr-2" for="faq-question-${randomId}">Q: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The question as it appears in the FAQ section on the event page.</span></span></label>
+                    <input class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                        type="text" id="faq-question-${randomId}" name="faq-question" value="" required />
+                </div>
+                <div class="flex flex-row">
+                    <label class="font-bold text-gray-600 mb-2 mr-2" for="faq-answer-${randomId}">A: <span class="text-red-500">*</span><span class="relative group inline-block ml-1 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The answer to the question. Supports multiple lines of text.</span></span></label>
+                    <textarea class="border-gray-400 rounded-lg border-dashed border p-2 mb-2 w-full"
+                        id="faq-answer-${randomId}" name="faq-answer" rows="4" required></textarea>
+                </div>
+            </div>`;
+        return div;
     }
 
-    function onInputChanged(input) {
+    function addNewMember() {
+        const list = document.getElementById("faq-entries");
+        const randomId = Math.random().toString(36).substring(2, 15);
+        list.appendChild(createFaqEntry(randomId));
         anythingChanged();
     }
 
     new Sortable(document.getElementById("faq-entries"), {
         animation: 150,
-        onEnd: function (/**Event*/evt) {
-            anythingChanged();
-        },
+        onEnd: () => anythingChanged(),
         handle: ".handle"
     });
 
-
-    const all_inputs = document.getElementsByTagName("input");
-    const all_textareas = document.getElementsByTagName("textarea");
-
-    for (let j = 0; j < all_inputs.length; j++) {
-        all_inputs[j].addEventListener("change", (event) => onInputChanged(event.target));
-    }
-
-    for (let j = 0; j < all_textareas.length; j++) {
-        all_textareas[j].addEventListener("change", (event) => onInputChanged(event.target));
-    }
-
+    document.querySelectorAll("input, textarea").forEach(el => el.addEventListener("change", anythingChanged));
 </script>
 
 </html>

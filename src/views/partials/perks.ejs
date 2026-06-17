@@ -1,0 +1,19 @@
+<section class="mt-32">
+    <% for (let i = 0; i < perks.length; i++) { %>
+        <div class="mx-16 mt-12">
+        <div class="flex flex-col items-center justify-center sm:flex-row">
+            <div
+            class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
+            <img src="<%= perks[i].image %>" alt="<%= perks[i].title %>" />
+        </div>
+        <div
+        class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
+            <div class="my-2 text-lg font-bold sm:m-0"><%= perks[i].title %></div>
+            <p>
+            <%= perks[i].description %>
+            </p>
+        </div>
+        </div>
+    </div>
+    <% } %>
+</section>

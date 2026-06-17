@@ -1,0 +1,36 @@
+<section class="relative mt-32">
+    <div
+        class="absolute top-0 bottom-0 left-1/2
+            w-[95vw] -translate-x-1/2
+            bg-<%=accentColour%> rounded-xl
+            skew-y-3
+            z-8">
+    </div>
+
+    <div class="relative z-10 py-8 my-16 skew-y-3 flex flex-col items-center">
+
+        <h1
+        class="text-white text-center text-2xl font-bold">
+        Organising committee (OC)
+        </h1>
+        <div class="mt-5 flex flex-wrap justify-center rounded-xl">
+        <% for (let i = 0; i < oc.length; i++) { %>
+            <div class="mx-4 my-7 flex flex-col items-center">
+            <h2 class="text-white mb-3 text-base font-semibold">
+                <%= oc[i].name %>
+            </h2>
+            <div
+                class="border-white mb-4 h-32 w-32 overflow-hidden rounded-full border-4 bg-white -skew-y-3">
+                <img src="<%=oc[i].image%>" alt="<%= oc[i].name %>, <%= oc[i].role %>" class="object-cover w-full h-full" />
+            </div>
+            <p class="text-s text-white text-center leading-4 w-32">
+                <%= oc[i].role %>
+            </p>
+            </div>
+        <% } %>
+        </div>
+        <p class="text-sm text-white mt-4">
+        Volunteers of <a href="https://www.esn.hr" class="font-bold underline">ESN Croatia</a>
+        </p>
+    </div>
+</section>

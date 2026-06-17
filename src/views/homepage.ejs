@@ -8,85 +8,131 @@
     <link
       href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
       rel="stylesheet" />
-    <link href="output.css" rel="stylesheet" />
+    <link href="/output.css" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
     <link
       id="favicon"
       rel="icon"
       type="image/x-icon"
-      href="/favicon.ico"
+      href="<%=icon ?? '/favicon.ico'%>"
       sizes="32x32" />
   </head>
   <body
     class="relative font-['Montserrat',sans-serif]">
     <div
-      class="fixed inset-0 -top-[10%] -left-[10%] -z-10 h-[120%] w-[120%] bg-cover bg-center bg-no-repeat blur-md brightness-110"
+      class="fixed inset-0 -top-[10%] -left-[10%] -z-10 h-[120%] w-[120%] bg-cover bg-center bg-no-repeat brightness-110"
       style="background-image: url('<%=background%>')"></div>
 
-    <%- include('partials/dropdownlist')%>
 
 
-    <img
-      src="<%=fullLogo%>"
-      alt="Croatian Erasmus Event full logo"
-      class="mt-5 md:mt-25 w-4/5 sm:ml-[30%] sm:w-1/3" />
+    <div class="relative w-11/12 md:w-5/6 mx-auto mt-4 md:mt-20 mb-4 md:mb-20 pt-14">
 
-      
-      <% const date = new Date(); %>
-      <% const eDate = new Date(eventDate); %>
-      <% if (date < eDate) { %>
-        <h1
-          class="shadow-<%=accentColour%> my-5 text-center text-3xl font-bold text-black sm:text-4xl md:text-5xl">
-          CEE you soon! 
-        </h1>
-        <%- include('partials/countdown')%>
-      <% } else { %>
-        <h1
-          class="shadow-<%=accentColour%> my-5 text-center text-3xl font-bold text-black sm:text-4xl md:text-5xl">
-          Thank you for joining us!
-        </h1>
+      <% if (prevEventId) { %>
+      <a href="/event/<%=prevEventId%>"
+         class="absolute left-0 top-2 z-0 flex items-center gap-2 bg-gray-100 text-<%=accentColour%> font-bold px-5 py-4 rounded-xl shadow-md hover:bg-gray-200 transition-colors text-base">
+        <i class="fa-solid fa-chevron-left"></i>
+        <span><%=prevEventTag ?? 'Previous'%></span>
+      </a>
       <% } %>
 
-    <div class="mx-4 mt-12 text-center">
-      <span class="text-2xl sm:text-3xl md:text-4xl">
-        What are we offering?
-      </span>
-    </div>
+      <% if (nextEventId) { %>
+      <a href="/event/<%=nextEventId%>"
+         class="absolute right-0 top-2 z-0 flex items-center gap-2 bg-gray-100 text-<%=accentColour%> font-bold px-5 py-4 rounded-xl shadow-md hover:bg-gray-200 transition-colors text-base">
+        <span><%=nextEventTag ?? 'Next'%></span>
+        <i class="fa-solid fa-chevron-right"></i>
+      </a>
+      <% } %>
 
-    <% for (let i = 0; i < perks.length; i++) { %>
-    <div class="mx-16 mt-12">
-      <div class="flex flex-col items-center justify-center sm:flex-row">
+    <main class="relative z-10 bg-white rounded-xl shadow-lg p-4">
+
+      <% const today = new Date(); %>
+      <% const eDate = new Date(eventDate); %>
+      <% const tDate = new Date(ticketSaleEndDate); %>
+      <% const date_day_of_the_month = eDate.getDate(); %>
+      <% const month_word = eDate.toLocaleString('default', { month: 'long' }); %>
+      <% const date_year = eDate.getFullYear(); %>
+
+
+      <section>
+        <img
+        src="<%=fullLogo%>"
+        alt="Croatian Erasmus Event full logo"
+        class="mt-4 md:mt-8 sm:ml-[25%] sm:w-1/2" />
+      </section>
+
+
+      <section class="mt-16 flex flex-col items-center text-2xl space-y-4 text-center">
+        <p>
+          <%=eventDescription%>
+        </p>
+
+        <p class="text-black font-bold"><%=date_day_of_the_month%> <%=month_word%> <%=date_year%></p>
+      </section>
+
+
+
+      <section class="relative mt-32">
+
         <div
-          class="shadow-gray h-48 w-80 overflow-hidden rounded-xl bg-gray-300">
-          <img src="<%= perks[i].image %>" alt="<%= perks[i].title %>" />
+          class="absolute top-0 bottom-0 left-1/2
+                w-[95vw] -translate-x-1/2
+                bg-<%=accentColour%> rounded-xl
+                -skew-y-3
+                z-8">
         </div>
-        <div
-          class="text-center sm:ml-[5%] sm:w-[50%] sm:text-left md:ml-[2%] md:w-[25%]">
-          <div class="my-2 text-lg font-bold sm:m-0"><%= perks[i].title %></div>
-          <p>
-            <%= perks[i].description %>
+
+        <div class="relative z-10 py-8 mt-16 -skew-y-3 flex flex-col items-center space-y-6">
+
+          <h1 class="text-white text-center text-3xl font-bold sm:text-4xl md:text-5xl">
+            <% if (state === 'selling') { %>
+              Tickets available now!
+            <% } else if (state === 'sold_out') { %>
+              Tickets sold out!
+            <% } else if (state === 'ended') { %>
+              Thank you for joining us!
+            <% } else if (state === 'published') { %>
+              Tickets coming soon!
+            <% } %>
+          </h1>
+
+          <% if (state === 'selling') { %>
+            <a href="<%=ticketsLink%>" class="bg-white text-<%=accentColour%> font-bold py-3 px-6 rounded-lg text-xl hover:bg-gray-200 transition-colors">
+              Click to buy
+            </a>
+          <% } %>
+
+          <p class="text-white font-bold text-center">
+            <% if (state === 'selling' && tDate > today) { %>
+              Sale closes in:
+            <% } else if ((state === 'published' || state === 'sold_out') && eDate > today) { %>
+              Event starts in:
+            <% } %>
           </p>
+
+          <% if ((state === 'selling' && tDate > today) || ((state === 'published' || state === 'sold_out') && eDate > today)) { %>
+            <%- include('partials/countdown')%>
+          <% } %>
+
         </div>
-      </div>
+
+      </section>
+
+      
+      <%- include('partials/perks')%>
+      <%- include('partials/faq')%>
+      <%- include('partials/oc')%>
+
+    </main>
     </div>
+
+    <% if (isAdmin) { %>
+    <a href="/editor/<%=eventId%>/details"
+        class="fixed bottom-6 right-6 z-50 flex items-center gap-2 bg-gray-700 text-white px-4 py-2 rounded-lg shadow-lg hover:bg-gray-600 transition-colors font-bold text-sm">
+        <i class="fa-solid fa-pen-to-square"></i> Edit event
+    </a>
     <% } %>
-
-    <div
-      class="mx-[4%] my-4 flex w-11/12 justify-center md:mx-[12.5%] md:w-9/12">
-      <div class="relative overflow-hidden rounded-xl p-6 text-center">
-        <div class="mb-2 text-base font-bold">
-          For more details, check out our Instagram page:
-        </div>
-        <a
-          href="https://www.instagram.com/croatianerasmusevent/"
-          class="text-<%=accentColour%>-darkened font-bold underline">
-          @croatianerasmusevent
-        </a>
-      </div>
-    </div>
-
     <%- include('partials/userback')%>
     <%- include('partials/footer')%>
-
     
   </body>
 </html>

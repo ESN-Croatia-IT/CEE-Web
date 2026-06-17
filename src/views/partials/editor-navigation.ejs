@@ -1,103 +1,68 @@
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
 
-<link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@100;700&display=swap" rel="stylesheet" />
+<nav class="hidden md:flex bg-gray-700 fixed top-0 left-0 right-0 z-40 px-6 py-4 justify-between items-center text-white">
+    <a href="/editor" class="text-xl font-bold hover:underline">CEE Event Manager</a>
+    <div class="flex items-center gap-6 font-bold text-lg">
+        <a href="details" class="hover:underline" id="details-link">Details</a>
+        <a href="appearance" class="hover:underline" id="appearance-link">Appearance</a>
+        <a href="benefits" class="hover:underline" id="benefits-link">Benefits</a>
+        <a href="oc" class="hover:underline" id="oc-link">OC</a>
+        <a href="faq" class="hover:underline" id="faq-link">FAQ</a>
+        <a href="/event/<%=eventId%>" class="flex items-center gap-1 px-3 py-1 rounded border border-white/40 hover:bg-white/10 transition-colors">
+            <i class="fa-solid fa-eye text-sm"></i> View
+        </a>
+        <form action="/logout" method="POST">
+            <button type="submit" class="cursor-pointer hover:underline">Logout</button>
+        </form>
+    </div>
+</nav>
 
-<style>
-    body {
-        font-family: 'Montserrat', sans-serif;
-    }
-
-    .nav-link {
-        transition: opacity 0.3s ease;
-        padding: 0px 16px;
-        display: inline-block;
-    }
-
-    .nav-link.active {
-        border-bottom: 3px solid white;
-        padding-bottom: 5px;
-    }
-
-    .cta-button {
-        background-color: rgba(255, 255, 255, 0.2);
-        padding: 2px 16px;
-        border-radius: 5px;
-        transition: background-color 0.3s ease;
-        text-decoration: none !important;
-        border: 2px solid white;
-        display: block;
-    }
-
-    .cta-button:hover {
-        background-color: rgba(255, 255, 255, 0.3);
-    }
-</style>
-
-<div id="navbar"
-    class="hidden md:flex bg-<%=accentColour%> fixed top-0 left-0 right-0 z-40 justify-around p-4 text-[24px] font-bold text-white">
-    <a href="/editor/details" class="nav-link" id="details-link">Details</a>
-    <a href="/editor/appearance" class="nav-link" id="appearance-link">Appearance</a>
-    <a href="/editor/benefits" class="nav-link" id="benefits-link">Benefits Editor</a>
-    <a href="/editor/oc" class="nav-link" id="about-link">OC Editor</a>
-    <a href="/editor/faq" class="nav-link" id="faq-link">FAQ Editor</a>
-    <form action="/logout" method="POST">
-        <button type="submit" class="cursor-pointer">Logout</button>
-    </form>
-</div>
-
-
-<div id="menu" class="fixed top-4 right-4 z-50 mt-4 mr-4 cursor-pointer md:hidden" onclick="toggleDropdown()">
-    <i class="fas fa-bars text-<%=accentColour%> text-[32px] transition-colors duration-700"></i>
+<div id="menu" class="fixed top-4 right-4 z-50 cursor-pointer md:hidden" onclick="toggleDropdown()">
+    <i class="fas fa-bars text-gray-700 text-[32px]"></i>
 </div>
 
 <div id="dropdown"
-    class="bg-<%=accentColour%> fixed top-[-100vh] right-0 left-0 z-40 flex w-full flex-col items-center space-y-6 px-5 pt-10 pb-5 text-center text-[24px] font-bold text-white transition-all duration-700">
-    <a href="/editor/details" class="nav-link" id="details-link-mobile">Details</a>
-    <a href="/editor/appearance" class="nav-link" id="appearance-link-mobile">Appearance</a>
-    <a href="/editor/benefits" class="nav-link" id="benefits-link-mobile">Benefits Editor</a>
-    <a href="/editor/oc" class="nav-link" id="about-link-mobile">OC Editor</a>
-    <a href="/editor/faq" class="nav-link" id="faq-link-mobile">FAQ Editor</a>
-    
+    class="bg-gray-700 fixed top-[-100vh] right-0 left-0 z-40 flex w-full flex-col items-center space-y-6 px-5 pt-10 pb-5 text-center text-xl font-bold text-white transition-all duration-700">
+    <a href="details" class="hover:underline" id="details-link-mobile">Details</a>
+    <a href="appearance" class="hover:underline" id="appearance-link-mobile">Appearance</a>
+    <a href="benefits" class="hover:underline" id="benefits-link-mobile">Benefits</a>
+    <a href="oc" class="hover:underline" id="oc-link-mobile">OC</a>
+    <a href="faq" class="hover:underline" id="faq-link-mobile">FAQ</a>
+    <a href="/event/<%=eventId%>" class="flex items-center gap-1 px-3 py-1 rounded border border-white/40 hover:bg-white/10 transition-colors">
+        <i class="fa-solid fa-eye text-sm"></i> View
+    </a>
     <form action="/logout" method="POST">
-        <button type="submit" class="cursor-pointer">Logout</button>
+        <button type="submit" class="cursor-pointer hover:underline">Logout</button>
     </form>
 </div>
+
 <script>
     function toggleDropdown() {
         const dropdown = document.getElementById('dropdown');
-        const menu = document.getElementById('menu');
-        const icon = menu.querySelector('i');
-
-        if (dropdown.classList.contains('top-[-100vh]')) {
-            dropdown.classList.remove('top-[-100vh]');
-            dropdown.classList.add('top-0');
-            icon.classList.remove('text-[#2E3192]');
-            icon.classList.add('text-white');
-        } else {
-            dropdown.classList.remove('top-0');
-            dropdown.classList.add('top-[-100vh]');
-            icon.classList.remove('text-white');
-            icon.classList.add('text-[#2E3192]');
-        }
+        const icon = document.querySelector('#menu i');
+        const open = !dropdown.classList.contains('top-[-100vh]');
+        dropdown.classList.toggle('top-[-100vh]', open);
+        dropdown.classList.toggle('top-0', !open);
+        icon.classList.toggle('text-white', !open);
+        icon.classList.toggle('text-gray-700', open);
     }
 
     function setActiveLink() {
-        const currentPage = window.location.pathname.split('/').pop() || '';
-        if(currentPage === 'details' || currentPage.includes('details')) {
-            document.getElementById('details-link').classList.add('active');
-            document.getElementById('details-link-mobile').classList.add('active');
-        } else if(currentPage === 'appearance' || currentPage.includes('appearance')) {
-            document.getElementById('appearance-link').classList.add('active');
-            document.getElementById('appearance-link-mobile').classList.add('active');
-        } else if (currentPage === 'benefits' || currentPage.includes('benefits')) {
-            document.getElementById('benefits-link').classList.add('active');
-            document.getElementById('benefits-link-mobile').classList.add('active');
-        } else if (currentPage === 'oc' || currentPage.includes('oc')) {
-            document.getElementById('about-link').classList.add('active');
-            document.getElementById('about-link-mobile').classList.add('active');
-        } else if (currentPage === 'faq' || currentPage.includes('faq')) {
-            document.getElementById('faq-link').classList.add('active');
-            document.getElementById('faq-link-mobile').classList.add('active');
+        const page = window.location.pathname.split('/').pop() || '';
+        const map = {
+            details:    ['details-link',    'details-link-mobile'],
+            appearance: ['appearance-link', 'appearance-link-mobile'],
+            benefits:   ['benefits-link',   'benefits-link-mobile'],
+            oc:         ['oc-link',         'oc-link-mobile'],
+            faq:        ['faq-link',        'faq-link-mobile'],
+        };
+        for (const [key, ids] of Object.entries(map)) {
+            if (page === key || page.includes(key)) {
+                ids.forEach(id => {
+                    const el = document.getElementById(id);
+                    if (el) el.classList.add('underline');
+                });
+            }
         }
     }
 

@@ -1,46 +1,156 @@
 <!doctype html>
 <html lang="en">
-  <head>
+
+<head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta name="description" content="Admin panel for the Croatian Erasmus Event. Edit event details, perks, FAQs, and organising committee information." />
-    <link href="./output.css" rel="stylesheet" />
-    <link
-      href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap"
-      rel="stylesheet" />
-    <title>Login</title>
-    <link
-      id="favicon"
-      rel="icon"
-      type="image/x-icon"
-      href="/favicon.ico"
-      sizes="32x32" />
-  </head>
-  <body class="font-['Montserrat',sans-serif] font-normal md:pt-16 min-h-screen flex flex-col">
-    <div id="header-bg"></div>
+    <meta name="description" content="Admin panel for the Croatian Erasmus Event." />
+    <link href="/output.css" rel="stylesheet" />
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:wght@400;700&display=swap" rel="stylesheet" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.1/css/all.min.css" />
+    <title>CEE Editor</title>
+    <link id="favicon" rel="icon" type="image/x-icon" href="/favicon.ico" sizes="32x32" />
+</head>
 
-    <%- include('partials/editor-navigation')%>
-    <%- include('partials/header')%>
-    
-    <main class="grow">
-        <h1
-            class="text-<%=accentColour%> mb-12 text-center text-3xl font-bold sm:text-4xl">
-            CEE Web Editor <i class="fa-solid fa-pencil"></i>
-        </h1>
+<body class="font-['Montserrat',sans-serif] bg-gray-100 min-h-screen flex flex-col">
 
-        <%- include('partials/editor-navigation') %>
-
-
-        <form action="/logout" method="post" class="mb-4 w-11/12 max-w-xs mx-auto flex flex-col space-y-4 border-<%=accentColour%> rounded-lg border-2 p-6 shadow-lg">
-            <p>Logged in as ...</p>
-            <button type="submit"
-                class="w-24 mx-auto mt-4 rounded hover:bg-<%=accentColour%>-darkened px-4 py-2 font-bold hover:text-white bg-white border-<%=accentColour%>-darkened border-3 text-<%=accentColour%>-darkened cursor-pointer"
-            > Logout </button>
+    <nav class="bg-gray-700 text-white px-6 py-4 flex justify-between items-center">
+        <span class="text-xl font-bold">CEE Event Manager</span>
+        <form action="/logout" method="POST">
+            <button type="submit" class="cursor-pointer font-bold hover:underline">Logout</button>
         </form>
+    </nav>
+
+    <main class="grow w-11/12 max-w-3xl mx-auto py-10 flex flex-col space-y-10">
+
+        <section>
+            <h2 class="text-gray-600 text-2xl font-bold mb-4">Events</h2>
+
+            <% if (events.length === 0) { %>
+                <p class="text-gray-500">No events yet. Create one below.</p>
+            <% } else { %>
+                <div class="flex flex-col space-y-3">
+                    <%
+                    const STATE_LABELS = { draft: 'Draft', published: 'Published', selling: 'Selling', sold_out: 'Sold Out', ended: 'Ended', archived: 'Archived' };
+                    const STATE_BADGE = {
+                        draft:     'bg-gray-200 text-gray-600',
+                        published: 'bg-esn-darkblue-lightened text-esn-darkblue-darkened',
+                        selling:   'bg-esn-green-lightened text-esn-green-darkened',
+                        sold_out:  'bg-esn-orange-lightened text-esn-orange-darkened',
+                        ended:     'bg-gray-200 text-gray-600',
+                        archived:  'bg-gray-200 text-gray-600',
+                    };
+                    %>
+                    <% events.forEach(event => { %>
+                        <div class="flex items-center gap-2 bg-white rounded-lg border-2 <%= event.featured ? 'border-esn-orange' : 'border-gray-200' %> shadow-sm">
+                            <a href="/editor/<%= event.id %>/details"
+                                class="flex-1 flex items-center justify-between p-4 hover:bg-gray-50 transition-colors rounded-lg">
+                                <span class="text-gray-700 font-medium">
+                                    <%= event.tag || '(no tag)' %>
+                                </span>
+                                <div class="flex items-center gap-3">
+                                    <% if (event.featured) { %>
+                                        <span class="text-sm px-2 py-1 rounded-full bg-esn-orange-lightened text-esn-orange-darkened">Homepage</span>
+                                    <% } %>
+                                    <span class="text-sm px-2 py-1 rounded-full <%= STATE_BADGE[event.state] || 'bg-gray-200 text-gray-600' %>">
+                                        <%= STATE_LABELS[event.state] || event.state %>
+                                    </span>
+                                    <i class="fa-solid fa-chevron-right text-gray-400"></i>
+                                </div>
+                            </a>
+                            <div class="flex items-center gap-1 pr-3">
+                                <form action="/editor/<%= event.id %>/feature" method="POST">
+                                    <button type="submit"
+                                        <%= !event.canFeature ? 'disabled' : '' %>
+                                        title="<%= event.featured ? 'Unset as homepage' : (event.canFeature ? 'Set as homepage' : 'Publish the event first to set as homepage') %>"
+                                        class="p-2 rounded transition-colors <%= event.featured ? 'cursor-pointer hover:bg-gray-100 text-esn-orange' : (event.canFeature ? 'cursor-pointer hover:bg-gray-100 text-gray-400 hover:text-esn-orange' : 'cursor-not-allowed text-gray-300') %>">
+                                        <i class="fa-<%= event.featured ? 'solid' : 'regular' %> fa-star"></i>
+                                    </button>
+                                </form>
+                                <form action="/editor/<%= event.id %>/delete" method="POST"
+                                    onsubmit="return confirm('Delete this event? This cannot be undone.')">
+                                    <button type="submit" title="Delete event"
+                                        class="cursor-pointer p-2 rounded text-gray-400 hover:bg-gray-100 hover:text-gray-800 transition-colors">
+                                        <i class="fa-solid fa-trash"></i>
+                                    </button>
+                                </form>
+                            </div>
+                        </div>
+                    <% }) %>
+                </div>
+            <% } %>
+        </section>
+
+        <section>
+            <h2 class="text-gray-600 text-2xl font-bold mb-4">Create New Event</h2>
+
+            <% if (error === 'tag_taken') { %>
+                <p class="text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 mb-3">
+                    That tag is already in use by another event. Choose a unique tag.
+                </p>
+            <% } else if (error === 'tag_required') { %>
+                <p class="text-sm text-gray-700 bg-gray-100 border border-gray-300 rounded-lg px-4 py-2 mb-3">
+                    A tag is required to create an event.
+                </p>
+            <% } %>
+
+            <form action="/editor/new" method="post"
+                class="bg-white rounded-lg p-6 flex flex-col space-y-4 shadow-sm border-2 border-gray-200">
+
+                <div class="p-4 rounded-lg border-gray-400 border-dashed border-2">
+                    <fieldset>
+                        <legend class="font-bold text-gray-600 mb-2">Accent Colour <span class="text-red-500">*</span><span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The primary colour used for headings, buttons and highlights throughout the event page.</span></span></legend>
+                        <div class="flex flex-col space-y-2">
+                            <label class="cursor-pointer flex items-center space-x-2">
+                                <input type="radio" name="accentColour" value="esn-lightblue" />
+                                <span class="text-esn-lightblue">Lightblue</span>
+                            </label>
+                            <label class="cursor-pointer flex items-center space-x-2">
+                                <input type="radio" name="accentColour" value="esn-darkblue" checked />
+                                <span class="text-esn-darkblue">Darkblue</span>
+                            </label>
+                            <label class="cursor-pointer flex items-center space-x-2">
+                                <input type="radio" name="accentColour" value="esn-pink" />
+                                <span class="text-esn-pink">Pink</span>
+                            </label>
+                            <label class="cursor-pointer flex items-center space-x-2">
+                                <input type="radio" name="accentColour" value="esn-orange" />
+                                <span class="text-esn-orange">Orange</span>
+                            </label>
+                            <label class="cursor-pointer flex items-center space-x-2">
+                                <input type="radio" name="accentColour" value="esn-green" />
+                                <span class="text-esn-green">Green</span>
+                            </label>
+                        </div>
+                    </fieldset>
+                </div>
+
+                <div class="p-4 rounded-lg border-gray-400 border-dashed border-2">
+                    <label class="font-bold text-gray-600 mb-2 block" for="tag">Event Tag <span class="text-red-500">*</span><span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">A unique short name for this event, e.g. "CEE Zagreb 2026". Shown in the admin events list.</span></span></label>
+                    <input type="text" name="tag" id="tag" required placeholder="e.g. CEE Zagreb 2026"
+                        class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+                </div>
+
+                <div class="p-4 rounded-lg border-gray-400 border-dashed border-2">
+                    <label class="font-bold text-gray-600 mb-2 block" for="eventDate">Event Date <span class="text-red-500">*</span><span class="relative group inline-block ml-1.5 align-middle"><i class="fa-solid fa-circle-info text-gray-400 text-xs cursor-help"></i><span class="pointer-events-none absolute z-10 hidden group-hover:block bottom-full left-0 mb-1 bg-gray-800 text-white text-xs font-normal rounded px-2 py-1.5 w-52 shadow-lg leading-relaxed">The date of the event. Used for the countdown timer on the event page.</span></span></label>
+                    <input type="date" name="eventDate" id="eventDate" required
+                        class="border-gray-400 rounded-lg border-dashed border p-2 w-full" />
+                </div>
+
+                <button type="submit"
+                    class="w-full rounded hover:bg-gray-700 px-4 py-2 font-bold text-white bg-gray-600 cursor-pointer transition-colors">
+                    <i class="fa-solid fa-plus mr-2"></i> Create Event
+                </button>
+
+            </form>
+        </section>
 
     </main>
 
+    <footer class="bg-gray-700 py-3 text-center text-xs text-white">
+        ESN Croatia, Selska 112c, 10000 Zagreb, Croatia
+    </footer>
 
-    <%- include('partials/footer')%>
-  </body>
+</body>
+
 </html>
